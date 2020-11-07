@@ -68,6 +68,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:MeetingWebsite.Controllers.PhotoController.Delete(System.String)">
+            <summary>
+            Удаление фотографии
+            </summary>
+            <param name="path">URL фотографии</param>
+            <returns></returns>
+        </member>
         <member name="M:MeetingWebsite.Controllers.SearchController.SerachUsers(System.String,MeetingWebsite.Models.Sex,System.Int32,System.Int32)">
             <summary>
             Поиск пользователей по параметрам

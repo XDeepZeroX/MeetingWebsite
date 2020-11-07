@@ -6,6 +6,7 @@ using MeetingWebsite.Extensions;
 using MeetingWebsite.Models;
 using MeetingWebsite.ModelsView.UserModels;
 using MeetingWebsite.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace MeetingWebsite.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SearchController : _BaseController
     {
         public SearchController(UsersRepository userRepository) : base(userRepository)

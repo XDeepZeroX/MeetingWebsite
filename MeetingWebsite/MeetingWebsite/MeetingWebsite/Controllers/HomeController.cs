@@ -19,16 +19,16 @@ namespace MeetingWebsite.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        [HttpGet("")]
+        public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+                return Redirect("/Profile");
             return View();
         }
 
-        [Authorize]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
+        [HttpGet]
+        public IActionResult Registration() => View();
     }
 }

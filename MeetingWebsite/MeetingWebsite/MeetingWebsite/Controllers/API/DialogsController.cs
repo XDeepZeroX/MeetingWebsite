@@ -23,7 +23,6 @@ namespace MeetingWebsite.Controllers
             : base(userRepository)
         {
             _dialogsRepository = dialogsRepository;
-
         }
 
         /// <summary>

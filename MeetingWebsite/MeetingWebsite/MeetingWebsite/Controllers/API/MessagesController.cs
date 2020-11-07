@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.Models;
 using MeetingWebsite.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace MeetingWebsite.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MessagesController : _BaseController
     {
         private readonly MessagesRepository _messagesRepository;

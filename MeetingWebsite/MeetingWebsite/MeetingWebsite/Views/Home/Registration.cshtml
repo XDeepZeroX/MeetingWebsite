@@ -1,0 +1,24 @@
+﻿@model MeetingWebsite.ModelsView.Auth.RegistrationModel
+@{
+    ViewData["Title"] = "Регистрация";
+}
+<div class="center-child vh-100">
+    <form action="/api/User" method="POST" class="card p-5" style="width: 30rem;">
+
+        <label class="mx-auto font-weight-bold">Регистрация</label>
+        <input asp-for="FirstName" placeholder="Имя" class="form-control w-90 mx-auto mt-2" />
+        <input asp-for="LastName" placeholder="Фамилия" class="form-control w-90 mx-auto mt-2" />
+        <input asp-for="Age" placeholder="Возраст" class="form-control w-90 mx-auto mt-2" />
+        @*<input asp-for="Sex"  placeholder="Пол" class="form-control w-90 mx-auto mt-2" />*@
+        <input asp-for="City" placeholder="Город" class="form-control w-90 mx-auto mt-2" />
+        <input type="tel" asp-for="PhoneNumber" placeholder="Номер телефона" class="form-control w-90 mx-auto mt-2" />
+        <input asp-for="Nickname" placeholder="Ник" class="form-control w-90 mx-auto mt-2" />
+        <input asp-for="Email" placeholder="Email" class="form-control w-90 mx-auto mt-2" />
+        <input asp-for="Password" placeholder="Пароль" class="form-control w-90 mx-auto mt-2" />
+
+
+        <input type="submit" value="Зарегистрироваться" class="btn btn-primary w-90 mx-auto mt-2">
+        <a href="/" class="card-link mx-auto">Вход</a>
+
+    </form>
+</div>

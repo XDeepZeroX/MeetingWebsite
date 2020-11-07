@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.Models;
 using MeetingWebsite.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace MeetingWebsite.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PhotoController : _BaseController
     {
         private readonly UserPhotosRepository _photosRepository;
@@ -46,8 +48,13 @@ namespace MeetingWebsite.Controllers
                     .Where(p => p.UserId == userId).CountAsync() + 1;
                 // путь к папке Files
                 string path = $"/Photos/{userId}_user/{photoId}_{photo.FileName}";
+                var fileInfo = new FileInfo(_appEnvironment.WebRootPath + path);
+
+                if (!fileInfo.Directory.Exists)
+                    fileInfo.Directory.Create();
+
                 // сохраняем файл в папку Files в каталоге wwwroot
-                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                using (var fileStream = new FileStream(fileInfo.FullName, FileMode.Create))
                 {
                     await photo.CopyToAsync(fileStream);
                 }
@@ -61,6 +68,27 @@ namespace MeetingWebsite.Controllers
                 return StatusCode(500, "Не удалось добавить фотографию");
             }
 
+        }
+
+        /// <summary>
+        /// Удаление фотографии
+        /// </summary>
+        /// <param name="path">URL фотографии</param>
+        /// <returns></returns>
+        [HttpDelete("")]
+        public async Task<IActionResult> Delete(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return BadRequest();
+
+            var userId = await CurrentUserId();
+            var photo = await _photosRepository.FirstOrDefault(p => p.UserId == userId && p.Path == path);
+            if (photo != null)
+                if (!await _photosRepository.Remove(photo))
+                    return StatusCode(500, "Не удалось удать фотографию. Сообщите нам об это ошибке");
+
+
+            return Ok();
         }
     }
 }
