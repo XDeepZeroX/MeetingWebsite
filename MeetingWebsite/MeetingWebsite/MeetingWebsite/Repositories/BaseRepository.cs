@@ -1,0 +1,93 @@
+﻿using MeetingWebsite.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+
+namespace MeetingWebsite.Repositories
+{
+    public class BaseRepository<T> where T : BaseEntity
+    {
+        protected readonly DBContext _db;
+        public BaseRepository(DBContext db)
+        {
+            _db = db;
+        }
+
+        public virtual async Task<bool> Add(T model)
+        {
+            try
+            {
+                _db.Add(model);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public virtual async Task<bool> Update(T model)
+        {
+            try
+            {
+                _db.Update(model);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public virtual async Task<bool> Remove(T model)
+        {
+            try
+            {
+                _db.Remove(model);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public virtual async Task<bool> Remove(int id)
+        {
+            var model = await _db.Set<T>().AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            if (model != null)
+                return await Remove(model);
+            return false;
+        }
+
+        public virtual IQueryable<T> GetList()
+        {
+            return _db.Set<T>().AsNoTracking().Where(p => !p.IsDelete).AsQueryable();
+        }
+
+        public virtual IQueryable<T> GetListWithDeleted()
+        {
+            return _db.Set<T>().AsNoTracking().AsQueryable();
+        }
+
+        public virtual async Task<T> Find(int id)
+        {
+            return await GetList().FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public virtual async Task<bool> Any(Expression<Func<T, bool>> func)
+        {
+            return await GetList().AnyAsync(func);
+        }
+
+        public virtual async Task<T> FirstOrDefault(Expression<Func<T, bool>> func)
+        {
+            return await GetList().FirstOrDefaultAsync(func);
+        }
+    }
+}

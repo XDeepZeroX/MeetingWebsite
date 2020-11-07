@@ -1,0 +1,36 @@
+﻿using MeetingWebsite.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace MeetingWebsite.ModelsView.UserModels
+{
+    public class UserView
+    {
+        public UserView() { }
+        public UserView(User user)
+        {
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            Age = user.Age;
+            Sex = user.Sex;
+            City = user.City;
+            Nickname = user.Nickname;
+            Email = user.Email;
+            PhoneNumber = user.PhoneNumber;
+            Photos = user.Photos.Select(p => p.Path).ToList();
+        }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Age { get; set; }
+        public Sex Sex { get; set; }
+        public string Nickname { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string City { get; set; }
+
+        public List<string> Photos { get; set; }
+    }
+}

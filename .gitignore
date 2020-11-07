@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/MeetingWebsite/MeetingWebsite/.vs/MeetingWebsite
+/MeetingWebsite/MeetingWebsite/MeetingWebsite/bin/Debug/netcoreapp3.1
+/MeetingWebsite/MeetingWebsite/MeetingWebsite/obj
+/MeetingWebsite/MeetingWebsite/MeetingWebsite/Meeting.db

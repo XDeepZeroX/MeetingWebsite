@@ -1,0 +1,303 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MeetingWebsite</name>
+    </assembly>
+    <members>
+        <member name="M:MeetingWebsite.Controllers.DialogsController.Dialogs">
+            <summary>
+            Возвращает список диалогов пользователя
+            </summary>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.DialogsController.Create(System.String,System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Создание диалога
+            </summary>
+            <param name="title">Название диалога</param>
+            <param name="usersId">Идентификаторы пользователей-участников</param>
+            <returns>Возвращает идентификатор созданного диалога</returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.DialogsController.ChangeTitle(System.Int32,System.String)">
+            <summary>
+            Смена нахвания диалога
+            </summary>
+            <param name="id">Идентификатор диалога</param>
+            <param name="newTitle">Новое название</param>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.DialogsController.Delete(System.Int32)">
+            <summary>
+            Удаление диалога
+            </summary>
+            <param name="id">Идентификатор диалога</param>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.MessagesController.GetList(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Возвращает список сообщений в диалоге
+            </summary>
+            <param name="dialogId">Идентификатор диалога</param>
+            <param name="lastKey">Ключ сообщения, следом за которым необходимо отбирать выборку</param>
+            <param name="count">Количество возвращаемых сообщений</param>
+            <returns></returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.MessagesController.Create(System.Int32,System.String)">
+            <summary>
+            Добавление нового сообщения
+            </summary>
+            <param name="dialogId">Идентификатор диалога</param>
+            <param name="message">Тело сообщения</param>
+            <returns>Возвращает идентификатор созданного сообщения</returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.MessagesController.Update(System.Int32,System.Int32,System.String)">
+            <summary>
+            Изменение сообщения
+            </summary>
+            <param name="dialogId">Идентификатор диалога</param>
+            <param name="messageId">Идентификатор сообщения</param>
+            <param name="newText">Новое тело сообщения</param>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.MessagesController.Delete(System.Int32,System.Int32)">
+            <summary>
+            Удаление сообщения
+            </summary>
+            <param name="dialogId">Идентификатор диалога</param>
+            <param name="messageId">Идентификатор сообщения</param>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.PhotoController.UploadPhoto(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Размещение фотографии в профиле пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.SearchController.SerachUsers(System.String,MeetingWebsite.Models.Sex,System.Int32,System.Int32)">
+            <summary>
+            Поиск пользователей по параметрам
+            </summary>
+            <returns>Возвращает максимум 25 пользователей</returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.UserController.Login(System.String,System.String)">
+            <summary>
+            Получение токена доступа (Авторизация)
+            </summary>
+            <param name="username">Имя учетной записи (Email/Login/Номер телефона)</param>
+            <param name="password">Пароль учетной записи</param>
+            <returns>Токен доступа</returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.UserController.Registration(MeetingWebsite.ModelsView.Auth.RegistrationModel)">
+            <summary>
+            Регистрация новой учетной записи
+            </summary>
+            <param name="model">Учетный данные</param>
+            <returns></returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.UserController.UpdateUser(MeetingWebsite.ModelsView.UserModels.UpdateUserView)">
+            <summary>
+            Обновление информации об учетной записи
+            </summary>
+            <param name="model">Обновленная информация о пользователе</param>
+            <returns></returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.UserController.Authorize(System.String,System.String)">
+            <summary>
+            Выдача токена по Email и паролю
+            </summary>
+            <param name="username">Email/Login/номер телефона</param>
+            <param name="password">Пароль</param>
+            <returns>Токен</returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.UserController.GetIdentity(System.String,System.String)">
+            <summary>
+            Аутендификация пользователя
+            </summary>
+            <param name="username">Логин/Email/Телефон</param>
+            <param name="password">Пароль</param>
+            <returns></returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers._BaseController.CurrentEmail">
+            <summary>
+            Возвращает Email текущего пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers._BaseController.CurrentUser">
+            <summary>
+            Возвращает текущего пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeetingWebsite.Helpers.MD5Helper.GetMD5Hash(System.String)">
+            <summary>
+            ХЭШ строки
+            </summary>
+            <param name="value">Исходная строка</param>
+            <returns>ХЭШ</returns>
+        </member>
+        <member name="P:MeetingWebsite.ModelsView.Auth.RegistrationModel.Nickname">
+            <summary>
+            Никнейм пользователя
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.Dialog.Title">
+            <summary>
+            Название диалога
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.Dialog.DialogsUsers">
+            <summary>
+            Участники диалога
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.Dialog.CreateUserId">
+            <summary>
+            Идентификатор создателя диалога
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.Dialog.CreateUser">
+            <summary>
+            Создатель диалога
+            </summary>
+        </member>
+        <member name="T:MeetingWebsite.Models.DialogsUsers">
+            <summary>
+            Вспомогательная сущность 
+            для связи многие ко многим
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.Message.UserId">
+            <summary>
+            Создатель сообщения
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.Message.DialogId">
+            <summary>
+            Идентификатор диалога
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.Message.Text">
+            <summary>
+            Содержимое сообщения
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.Message.DateCreateUnix">
+            <summary>
+            Дата создания сообщения
+            </summary>
+        </member>
+        <member name="T:MeetingWebsite.Models.User">
+            <summary>
+            Учетная запись пользователя
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.Nickname">
+            <summary>
+            Никнейм пользователя
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.Sex">
+            <summary>
+            Пол
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.Age">
+            <summary>
+            Возвраст
+            </summary>
+        </member>
+        <member name="F:MeetingWebsite.Models.User._city">
+            <summary>
+            Город проживания
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.CityNormalize">
+            <summary>
+            Нормализация названия города
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.FirstName">
+            <summary>
+            Имя
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.LastName">
+            <summary>
+            Фамилия
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.PhoneNumberConfirmed">
+            <summary>
+            Флаг, подтвержден ли телефонный номер
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.PhoneNumber">
+            <summary>
+            Телефонный номер
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.PasswordHash">
+            <summary>
+            ХЭШ от пароля
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.EmailConfirmed">
+            <summary>
+            Флаг, подтвержденный ли Email
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.Email">
+            <summary>
+            Email
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.Photos">
+            <summary>
+            Фотографии пользователя
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.DialogsUsers">
+            <summary>
+            Диалоги в которых состоит пользователь
+            </summary>
+        </member>
+        <member name="F:MeetingWebsite.Models.Sex.Man">
+            <summary>
+            Парень 
+            </summary>
+        </member>
+        <member name="F:MeetingWebsite.Models.Sex.Girl">
+            <summary>
+            Деушки 
+            </summary>
+        </member>
+        <member name="F:MeetingWebsite.Models.Sex.Other">
+            <summary>
+            Другое 
+            </summary>
+        </member>
+        <member name="T:MeetingWebsite.Models.UserPhoto">
+            <summary>
+            Фотография пользователя
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.UserPhoto.Path">
+            <summary>
+            Путь к фотографии в файловом хранилище
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.UserPhoto.UserId">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.UserPhoto.User">
+            <summary>
+            Пользователь
+            </summary>
+        </member>
+        <member name="M:MeetingWebsite.Repositories.UsersRepository.IsExists(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Проверяет существование пользователей в БД по идентификаторам
+            </summary>
+            <param name="usersId">Идентификаторы пользователей</param>
+            <returns>Идентификаторы пользователей которых нет в БД</returns>
+        </member>
+    </members>
+</doc>
