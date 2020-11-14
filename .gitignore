@@ -131,3 +131,4 @@ dmypy.json
 /MeetingWebsite/MeetingWebsite/MeetingWebsite/bin/Debug/netcoreapp3.1
 /MeetingWebsite/MeetingWebsite/MeetingWebsite/obj
 /MeetingWebsite/MeetingWebsite/MeetingWebsite/Meeting.db
+/MeetingWebsite/.idea
