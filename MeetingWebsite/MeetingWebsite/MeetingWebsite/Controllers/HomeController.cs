@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MeetingWebsite.Controllers
 {
+    [Route("")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

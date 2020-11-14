@@ -4,12 +4,12 @@
         <name>MeetingWebsite</name>
     </assembly>
     <members>
-        <member name="M:MeetingWebsite.Controllers.DialogsController.Dialogs">
+        <member name="M:MeetingWebsite.Controllers.DialogsApiController.Dialogs">
             <summary>
             Возвращает список диалогов пользователя
             </summary>
         </member>
-        <member name="M:MeetingWebsite.Controllers.DialogsController.Create(System.String,System.Collections.Generic.List{System.Int32})">
+        <member name="M:MeetingWebsite.Controllers.DialogsApiController.Create(System.String,System.Collections.Generic.List{System.Int32})">
             <summary>
             Создание диалога
             </summary>
@@ -17,14 +17,14 @@
             <param name="usersId">Идентификаторы пользователей-участников</param>
             <returns>Возвращает идентификатор созданного диалога</returns>
         </member>
-        <member name="M:MeetingWebsite.Controllers.DialogsController.ChangeTitle(System.Int32,System.String)">
+        <member name="M:MeetingWebsite.Controllers.DialogsApiController.ChangeTitle(System.Int32,System.String)">
             <summary>
             Смена нахвания диалога
             </summary>
             <param name="id">Идентификатор диалога</param>
             <param name="newTitle">Новое название</param>
         </member>
-        <member name="M:MeetingWebsite.Controllers.DialogsController.Delete(System.Int32)">
+        <member name="M:MeetingWebsite.Controllers.DialogsApiController.Delete(System.Int32)">
             <summary>
             Удаление диалога
             </summary>

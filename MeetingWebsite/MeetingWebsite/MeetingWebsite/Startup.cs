@@ -11,7 +11,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
+using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace MeetingWebsite
 {
@@ -34,6 +36,10 @@ namespace MeetingWebsite
 
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddCookie(o =>
+                {
+                    o.LoginPath = "/";
+                })
                     .AddJwtBearer(options =>
                     {
                         options.RequireHttpsMetadata = false;
@@ -55,6 +61,30 @@ namespace MeetingWebsite
                             IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
                             // валидация ключа безопасности
                             ValidateIssuerSigningKey = true,
+
+                        };
+
+
+                        options.Events = new JwtBearerEvents()
+                        {
+                            OnMessageReceived = context =>
+                            {
+                                var token = context.Request.Headers["Authorization"].ToString();
+                                if (string.IsNullOrEmpty(token))
+                                    token = context.Request.Cookies["Authorization"];
+
+
+                                if (!string.IsNullOrEmpty(token))
+                                {
+                                    var split = token.Split(' ');
+                                    if (split.Length == 2)
+                                        token = split[1];
+                                }
+
+                                context.Token = token;
+
+                                return Task.CompletedTask;
+                            },
                         };
                     });
 
@@ -91,6 +121,17 @@ namespace MeetingWebsite
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseStatusCodePages(async context =>
+            {
+                //var request = context.HttpContext.Request;
+                var response = context.HttpContext.Response;
+
+                if (response.StatusCode == 401)
+                {
+                    response.Redirect($"/?redirectUrl={Uri.EscapeDataString(context.HttpContext.Request.Path)}"); //Login page
+                }
+            });
 
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.

@@ -77,15 +77,92 @@ body {
     position: relative;
 }
 
-.center-child > * {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-}
+    .center-child > * {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+    }
 
 .w-90 {
     width: 90%;
+}
+
+.dialog-simple:hover {
+    background: #b2b2b23b;
+}
+
+.dialog-simple * {
+    line-height: 40px;
+}
+
+.dialog-icon {
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    background: #4c4d4c6b;
+}
+
+    .dialog-icon > p {
+        font-size: 20px;
+        font-weight: 600;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        color: #030fd4;
+    }
+
+.dialog-title {
+    font-weight: 500;
+    font-size: 12.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#dialogs-title {
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+#input-message {
+    height: 45px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.user-icon {
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    max-width: 2.5rem;
+    max-height: 2.5rem;
+    background: #4c4d4c6b;
+}
+
+    .user-icon > p {
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        color: #030fd4;
+        line-height: 2.5rem;
+    }
+
+.user-name {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #2a5885;
+}
+.message-time {
+    font-size: 12.5px;
+    color: rgba(119,126,140,.6);
+}
+.message-body{
+    font-size: 13px;
 }

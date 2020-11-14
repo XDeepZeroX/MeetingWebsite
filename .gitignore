@@ -132,3 +132,4 @@ dmypy.json
 /MeetingWebsite/MeetingWebsite/MeetingWebsite/obj
 /MeetingWebsite/MeetingWebsite/MeetingWebsite/Meeting.db
 /MeetingWebsite/.idea
+/MeetingWebsite/MeetingWebsite/MeetingWebsite/wwwroot/node_modules/tata-js

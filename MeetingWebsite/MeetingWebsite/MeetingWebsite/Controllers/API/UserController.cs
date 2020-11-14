@@ -12,6 +12,7 @@ using MeetingWebsite.Models;
 using MeetingWebsite.ModelsView.Auth;
 using MeetingWebsite.ModelsView.UserModels;
 using MeetingWebsite.Repositories;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +44,10 @@ namespace MeetingWebsite.Controllers
             var token = await Authorize(username, password);
             if (token == null)
                 return BadRequest(new { errorText = "Не правильный логин или пароль." });
+
+            //Response.Headers.Add("Authorization", $"Bearer {token.AccessToken}");
+
+            //HttpContext.SignInAsync(new ClaimsPrincipal() {  })
 
             return Ok(token);
         }

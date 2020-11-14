@@ -14,6 +14,46 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\node_modules\%40pnotify\**" />
+    <Compile Remove="wwwroot\node_modules\pnotify\**" />
+    <Compile Remove="wwwroot\node_modules\tata-js\**" />
+    <Content Remove="wwwroot\node_modules\%40pnotify\**" />
+    <Content Remove="wwwroot\node_modules\pnotify\**" />
+    <Content Remove="wwwroot\node_modules\tata-js\**" />
+    <EmbeddedResource Remove="wwwroot\node_modules\%40pnotify\**" />
+    <EmbeddedResource Remove="wwwroot\node_modules\pnotify\**" />
+    <EmbeddedResource Remove="wwwroot\node_modules\tata-js\**" />
+    <None Remove="wwwroot\node_modules\%40pnotify\**" />
+    <None Remove="wwwroot\node_modules\pnotify\**" />
+    <None Remove="wwwroot\node_modules\tata-js\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\node_modules\jquery.cookie\bower.json" />
+    <Content Include="wwwroot\node_modules\jquery.cookie\component.json" />
+    <Content Include="wwwroot\node_modules\jquery.cookie\cookie.jquery.json" />
+    <Content Include="wwwroot\node_modules\jquery.cookie\MIT-LICENSE.txt" />
+    <Content Include="wwwroot\node_modules\jquery.cookie\package.json" />
+    <Content Include="wwwroot\node_modules\jquery.cookie\test\index.html" />
+    <Content Include="wwwroot\node_modules\jquery.cookie\test\malformed_cookie.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\node_modules\jquery.cookie\.jshintrc" />
+    <None Include="wwwroot\node_modules\jquery.cookie\.npmignore" />
+    <None Include="wwwroot\node_modules\jquery.cookie\.tm_properties" />
+    <None Include="wwwroot\node_modules\jquery.cookie\.travis.yml" />
+    <None Include="wwwroot\node_modules\jquery.cookie\CHANGELOG.md" />
+    <None Include="wwwroot\node_modules\jquery.cookie\CONTRIBUTING.md" />
+    <None Include="wwwroot\node_modules\jquery.cookie\Gruntfile.js" />
+    <None Include="wwwroot\node_modules\jquery.cookie\jquery.cookie.js" />
+    <None Include="wwwroot\node_modules\jquery.cookie\README.md" />
+    <None Include="wwwroot\node_modules\jquery.cookie\test\server.js" />
+    <None Include="wwwroot\node_modules\jquery.cookie\test\tests.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityServer4" Version="4.1.1" />
     <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore" Version="3.7.2" />
     <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.linux-x64" Version="3.7.2" />
     <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.osx-x64" Version="3.7.2" />

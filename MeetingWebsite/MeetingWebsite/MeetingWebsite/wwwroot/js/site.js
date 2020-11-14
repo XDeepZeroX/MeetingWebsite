@@ -1,4 +1,15 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function sendForm(form, event, then, onStart) {
+    event.preventDefault();
+    if (onStart != undefined)
+        onStart();
 
-// Write your JavaScript code.
+    $.ajax({
+        url: $(form).attr('action'),
+        method: $(form).attr('method'),
+        complete: (response) => {
+            if (then != undefined)
+                then(response);
+        },
+        data: $(form).serialize()
+    });
+}

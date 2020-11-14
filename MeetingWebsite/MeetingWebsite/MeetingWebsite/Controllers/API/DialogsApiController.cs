@@ -11,14 +11,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeetingWebsite.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Dialogs")]
     [ApiController]
     [Authorize]
-    public class DialogsController : _BaseController
+    public class DialogsApiController : _BaseController
     {
         private readonly DialogsRepository _dialogsRepository;
 
-        public DialogsController(DialogsRepository dialogsRepository,
+        public DialogsApiController(DialogsRepository dialogsRepository,
             UsersRepository userRepository)
             : base(userRepository)
         {
