@@ -14,7 +14,7 @@ namespace MeetingWebsite.Controllers
     [Route("api/Dialogs")]
     [ApiController]
     [Authorize]
-    public class DialogsApiController : _BaseController
+    public class DialogsApiController : _BaseApiController
     {
         private readonly DialogsRepository _dialogsRepository;
 
@@ -53,17 +53,29 @@ namespace MeetingWebsite.Controllers
         {
             try
             {
+                usersId.Add(CurrentUserId());
                 usersId = usersId.Distinct().ToList();
                 if (usersId.Count < 2)
                     return StatusCode(400, "Не достаточное количество участников < 2");
 
+                if (usersId.Count == 2)
+                {
+                    var _dialog = await _dialogsRepository.GetList()
+                        .Include(p => p.DialogsUsers)
+                        .Where(p => p.DialogsUsers.Count == 2)
+                        .FirstOrDefaultAsync(p => p.DialogsUsers.Any(x => x.User.Id == usersId[0]) && p.DialogsUsers.Any(x => x.User.Id == usersId[1]));
+                    if (_dialog != null)
+                        return Ok(_dialog.Id);
+                }
+
+
                 var errorUsers = await _userRepository.IsExists(usersId);
                 if (errorUsers.Count > 0)
                     return StatusCode(400, $"Пользователи с идентификаторами: {string.Join(", ", errorUsers)} - не найдены");
-                if (string.IsNullOrEmpty(title))
-                    return StatusCode(400, "Название диалога не может быть пустым");
+                //if (string.IsNullOrEmpty(title))
+                //    return StatusCode(400, "Название диалога не может быть пустым");
 
-                var currentUserId = await CurrentUserId();
+                var currentUserId = CurrentUserId();
                 var dialog = new Dialog() { Title = title, CreateUserId = currentUserId };
                 if (!await _dialogsRepository.Add(dialog))
                     throw new Exception("Не удалось создать диалог");
@@ -115,7 +127,7 @@ namespace MeetingWebsite.Controllers
             if (dialog == null)
                 return StatusCode(404, "Не удалось найди диалог с данным идентификатором");
 
-            var currentUserId = await CurrentUserId();
+            var currentUserId = CurrentUserId();
             if (currentUserId != dialog.CreateUserId)
                 return StatusCode(401, "Удалять диалог может только его создатель");
 

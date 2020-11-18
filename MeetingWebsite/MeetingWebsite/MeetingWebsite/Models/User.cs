@@ -3,6 +3,8 @@ using MeetingWebsite.Helpers;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -58,6 +60,11 @@ namespace MeetingWebsite.Models
         public string LastName { get; set; }
 
         /// <summary>
+        /// Имя Фамилия пользователя
+        /// </summary>
+        public string FullName { get => $"{FirstName} {LastName}"; }
+
+        /// <summary>
         /// Флаг, подтвержден ли телефонный номер
         /// </summary>
         public virtual bool PhoneNumberConfirmed { get; set; }
@@ -83,6 +90,11 @@ namespace MeetingWebsite.Models
         public virtual string Email { get; set; }
 
         /// <summary>
+        /// Краткая информация о пользователе
+        /// </summary>
+        public string BriefInformation { get; set; }
+
+        /// <summary>
         /// Фотографии пользователя
         /// </summary>
         public virtual List<UserPhoto> Photos { get; set; } = new List<UserPhoto>();
@@ -98,17 +110,20 @@ namespace MeetingWebsite.Models
         /// <summary>
         /// Парень 
         /// </summary>
+        [Display(Name = "Парень")]
         Man = 0,
 
         /// <summary>
         /// Деушки 
         /// </summary>
+        [Display(Name = "Девушка")]
         Girl = 1,
 
 
         /// <summary>
         /// Другое 
         /// </summary>
+        [Display(Name = "Другое")]
         Other = 2,
     }
 }

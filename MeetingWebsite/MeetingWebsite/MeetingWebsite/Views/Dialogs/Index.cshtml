@@ -3,68 +3,120 @@
 }
 
 
-<div class="vh-100 w-75 mx-auto py-3">
-    <div class="h-100 w-100 row border">
-        <div class="h-100 w-25 flex-column border-right">
+<div class="h-100 w-100 row border m-0">
+    <div class="h-100 w-25 flex-column border-right">
 
-            <div id="dialogs-title" class="text-center py-3">Диалоги</div>
-            <div id="dialogs">
+        <div id="dialogs-title" class="text-center py-3">Диалоги</div>
+        <div id="dialogs">
 
-                @* Диалог *@
-                <div class="d-flex flex-nowrap m-0 p-2 dialog-simple pointer">
-                    <div class="rounded-circle dialog-icon">
-                        <p>КБ</p>
-                    </div>
-                    <div class="overflow-hidden pl-2 d-none d-sm-block">
-                        <p class="dialog-title m-0 p-0">Название диалога</p>
-                    </div>
+            @* Диалог *@
+            <div class="d-flex flex-nowrap m-0 p-2 dialog-simple pointer">
+                <div class="rounded-circle dialog-icon">
+                    <p>КБ</p>
                 </div>
-
+                <div class="overflow-hidden pl-2 d-none d-sm-block">
+                    <p class="dialog-title m-0 p-0">Название диалога</p>
+                </div>
             </div>
+
         </div>
-        <div class="h-100 w-75 pb-2 d-flex flex-column" style="background: rgba(0, 0, 0, 0.26);">
-            <div class="px-3 py-3 dialog-title border-bottom" style="font-size: 1.2rem;">Название диалога</div>
-            <div class="w-100 h-100 py-3 flex-grow-1 overflow-auto" id="messages">
-                <div class="px-5 d-flex flex-column justify-content-end">
+    </div>
+    <div class="h-100 w-75 pb-2 d-flex flex-column" style="background: rgba(0, 0, 0, 0.26);">
+        <div class="px-3 py-3 dialog-title border-bottom" style="font-size: 1.2rem;">Название диалога</div>
+        <div class="w-100 h-100 py-3 flex-grow-1 overflow-auto">
+            <div class="px-5 d-flex flex-column justify-content-end" id="messages">
 
-                    @for (int i = 0; i < 100; i++)
-                    {
+                @for (int i = 0; i < 5; i++)
+                {
 
-                        <div class="row m-0 flex-nowrap message">
-                            <div class="rounded-circle user-icon">
-                                <p>КБ</p>
-                            </div>
-                            <div class="d-flex flex-column">
-                                @* Имя пользователя и дата сообщения *@
-                                <div class="row m-0 p-0 align-content-end">
-                                    <p class="user-name pl-2 m-0">Имя Пользователя</p>
-                                    <p class="message-time pl-2 m-0">21:10</p>
-                                </div>
-                                @* Текст сообщения *@
-                                <p class="pl-2 message-body">
-                                    Сообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинное
-                                </p>
-
-                            </div>
+                    <div class="row m-0 flex-nowrap message" idMessage="@i">
+                        <div class="rounded-circle user-icon">
+                            <p>КБ</p>
                         </div>
-                    }
-                </div>
-            </div>
-            <div class="px-3 d-flex">
-                <input type="text" placeholder="Введите сообщение..." class="flex-grow-1 form-control" id="input-message" />
-                <img src="~/images/send.png" width="45px" class="ml-4 mr-1 pointer" />
+                        <div class="d-flex flex-column">
+                            @* Имя пользователя и дата сообщения *@
+                            <div class="row m-0 p-0 align-content-end">
+                                <p class="user-name pl-2 m-0">Имя Пользователя</p>
+                                <p class="message-time pl-2 m-0">21:10</p>
+                            </div>
+                            @* Текст сообщения *@
+                            <p class="pl-2 message-body">
+                                Сообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинное
+                            </p>
+
+                        </div>
+                    </div>
+                }
             </div>
         </div>
+        <form method="POST" action="/api/Messages" class="px-3 d-flex" onsubmit="SendMessage(this, event)">
+            <input type="text" placeholder="Введите сообщение..." class="flex-grow-1 form-control" id="input-message" />
+            <img src="~/images/send.png" width="33.5px" class="ml-4 mr-1 pointer" />
+        </form>
     </div>
 </div>
 
 <script>
     $(() => {
-        updateScroll();
+        UpdateScrollMessages();
     });
-    function updateScroll() {
-        var element = document.getElementById("messages");
-        console.log(element);
+
+
+    //Обработка события отправки сообщения по Enter
+    function OnEnter(event) {
+        if (event.which == 13 || event.keyCode == 13) {
+            console.log(true);
+            return true;
+        }
+        console.log(false);
+        return true;
+    }
+
+
+    //Опускает скролл сообщений в самый низ
+    function UpdateScrollMessages() {
+        var element = document.getElementById("messages").parentElement;
         element.scrollTop = element.scrollHeight;
     }
+
+    // Получение списка диалогов
+    function GetDialogs() {
+
+
+    }
+    // Отправка сообщения
+    function SendMessage(form, event) {
+        event.preventDefault();
+        var user = GetCurrentUserInfo();
+        $("#messages").append(`
+                        <div class="row m-0 flex-nowrap message sending-message"  idMessage="-1" guid="${generateUUID()}">
+                            <div class="rounded-circle user-icon">
+                                <p>${(user.firstName[0] + user.lastName[0]).toUpperCase()}</p>
+                            </div>
+                            <div class="d-flex flex-column">
+                                @* Имя пользователя и дата сообщения *@
+                                <div class="row m-0 p-0 align-content-end">
+                                    <p class="user-name pl-2 m-0">${user.firstName} ${user.lastName}</p>
+                                    <p class="message-time pl-2 m-0">${OnlyTime(new Date())}</p>
+                                </div>
+                                @* Текст сообщения *@
+                                <p class="pl-2 message-body">
+                                    ${$("#input-message").val()}
+                                </p>
+
+                            </div>
+                        </div>`);
+        UpdateScrollMessages();
+
+        //$.ajax({
+        //    url: '/api/Messages',
+        //    method: "POST",
+        //    data: {
+
+        //    }
+        //})
+
+
+    }
+
 </script>

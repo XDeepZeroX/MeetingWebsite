@@ -119,15 +119,33 @@
             <param name="password">Пароль</param>
             <returns></returns>
         </member>
-        <member name="M:MeetingWebsite.Controllers._BaseController.CurrentEmail">
+        <member name="M:MeetingWebsite.Controllers._BaseApiController.CurrentEmail">
             <summary>
             Возвращает Email текущего пользователя
             </summary>
             <returns></returns>
         </member>
-        <member name="M:MeetingWebsite.Controllers._BaseController.CurrentUser">
+        <member name="M:MeetingWebsite.Controllers._BaseApiController.CurrentUser">
             <summary>
             Возвращает текущего пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.BaseController.CurrentEmail">
+            <summary>
+            Возвращает Email текущего пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.BaseController.CurrentUser">
+            <summary>
+            Возвращает текущего пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.BaseController.CurrentUserId">
+            <summary>
+            Получение идентификатора пользователя
             </summary>
             <returns></returns>
         </member>
@@ -229,6 +247,11 @@
             Фамилия
             </summary>
         </member>
+        <member name="P:MeetingWebsite.Models.User.FullName">
+            <summary>
+            Имя Фамилия пользователя
+            </summary>
+        </member>
         <member name="P:MeetingWebsite.Models.User.PhoneNumberConfirmed">
             <summary>
             Флаг, подтвержден ли телефонный номер
@@ -252,6 +275,11 @@
         <member name="P:MeetingWebsite.Models.User.Email">
             <summary>
             Email
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.Models.User.BriefInformation">
+            <summary>
+            Краткая информация о пользователе
             </summary>
         </member>
         <member name="P:MeetingWebsite.Models.User.Photos">

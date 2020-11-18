@@ -1,0 +1,168 @@
+﻿@model List<User>
+
+@using MeetingWebsite.Models
+@{
+    ViewData["Title"] = "Поиск";
+}
+
+
+<div class="h-100 w-100 row border m-0">
+    <div class="h-100 w-25 flex-column border-right" onmouseout="getUsers()">
+
+        <div id="dialogs-title" class="text-center py-3">Настройки поиска</div>
+        <form id="settings" class="px-3 mt-4">
+
+            <input type="text" name="city" placeholder="Город" class="form-control" onchange="onChangeSettings()" />
+            @Html.DropDownList("Sex", Html.GetEnumSelectList(typeof(Sex)), new { @class = "form-control my-2", @onchange = "onChangeSettings()" })
+            <div>Возраст:</div>
+            <div class="d-flex align-items-center mt-2">
+                От
+                <input type="number" name="minAge" id="minAge" value="18" min="18" class="form-control ml-1" onchange="onChangeSettings()" />
+            </div>
+            <div class="d-flex align-items-center mt-2">
+                До
+                <input type="number" name="maxAge" id="maxAge" value="25" min="18" class="form-control ml-1" onchange="onChangeSettings()" />
+            </div>
+
+        </form>
+    </div>
+    <div class="h-100 w-75 pb-2 d-flex flex-column" style="background: rgba(0, 0, 0, 0.26);">
+        <div class="px-3 py-3 dialog-title border-bottom" style="font-size: 1.2rem;">Пользователи</div>
+        <div class="w-100 h-100 py-3 flex-grow-1 overflow-auto">
+            <div class="px-5 d-flex flex-column" id="users">
+
+                @for (int i = 0; i < Model.Count; i++)
+                {
+
+                    <div class="d-flex justify-content-between flex-nowrap message">
+                        <div class="row m-0 flex-nowrap">
+
+                            <div class="rounded-circle user-icon overflow-hidden">
+                                @if (Model[i].Photos.Count == 0)
+                                {
+                                    <img src="~/images/user.png" style="width: 100%" />
+                                }
+                                else
+                                {
+                                    <img src="@Model[i].Photos.Last().Path" style="width: 100%" />
+                                }
+                            </div>
+                            <div class="d-flex flex-column">
+                                @* Имя пользователя и дата сообщения *@
+                                <div class="row m-0 p-0 align-content-end">
+                                    <p class="user-name pl-2 m-0">@Model[i].FullName</p>
+                                </div>
+                                @* Город пользователя *@
+                                <p class="pl-2 message-body m-0" style="color: #7d7d7d">
+                                    @Model[i].City
+                                </p>
+                                @* Краткая информация о пользователе *@
+                                @if (string.IsNullOrEmpty(Model[i].BriefInformation))
+                                {
+                                    <p class="pl-2 message-body" style="color: #7d7d7d">
+                                        Пользователь не добавил описание
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="pl-2 message-body">
+                                        @Model[i].BriefInformation
+                                    </p>
+                                }
+
+                            </div>
+                        </div>
+                        <a href="#" class=" float-right" onclick="createDialogAndOpen(@Model[i].Id)">
+                            <img src="/images/message.png" width="40" />
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(() => {
+        //onChangeSettings();
+    })
+
+
+    function createDialogAndOpen(userId) {
+        send('/api/Dialogs', 'POST', openDialog, JSON.stringify([userId]));
+    }
+    function openDialog(response) {
+        debugger;
+        if (response.status == 200)
+            window.location = '/' // TODO: Перейти на страницу диалога
+        else
+            alert(response.responseText);
+    }
+
+
+    var timeout = -10;
+    var oldformSerialize = '';
+
+    // Событие при изменении настроек поиска
+    function onChangeSettings() {
+        if (timeout != undefined)
+            clearTimeout(timeout);
+        timeout = setTimeout(getUsers, 1500);
+        console.log(timeout);
+    }
+
+    // Получение пользователей
+    function getUsers() {
+        if (timeout != undefined)
+            clearTimeout(timeout);
+        var formSerialize = $('#settings').serialize();
+        if (formSerialize != oldformSerialize) {
+            oldformSerialize = formSerialize;
+            send(`/api/Search?${formSerialize}`, 'GET', refreshUsers);
+        }
+    }
+
+    // Отрисовка пользователей
+    function refreshUsers(response) {
+        var users = response.responseJSON;
+        $('#users').html('');
+        users.forEach((user, index) => {
+            var photoPath = '/images/user.png';
+            if (user.photos.length > 0)
+                photoPath = user.photos[user.photos.length - 1]
+
+            var briefInformation = 'Пользователь не добавил описание';
+            if (user.briefInformation != null && user.briefInformation.length > 0)
+                briefInformation = user.briefInformation;
+
+            var userHtml = `
+                <div class="d-flex justify-content-between flex-nowrap message">
+                    <div class="row m-0 flex-nowrap">
+                    <div class="rounded-circle user-icon overflow-hidden">
+                        <img src="${photoPath}" style="width: 100%" />
+                    </div>
+                    <div class="d-flex flex-column">
+                        @* Имя пользователя и дата сообщения *@
+                        <div class="row m-0 p-0 align-content-end">
+                            <p class="user-name pl-2 m-0">${user.firstName} ${user.lastName}</p>
+                        </div>
+                        @* Город пользователя *@
+                        <p  class="pl-2 message-body m-0" style="color: #7d7d7d">
+                            ${user.city}
+                        </p>
+                        <p class="pl-2 message-body" style="color: #7d7d7d">
+                            ${briefInformation}
+                        </p>
+
+                    </div>
+                </div>
+                <a href="#" class=" float-right" onclick="createDialogAndOpen(${user.id})">
+                    <img src="/images/message.png" width="40" />
+                </a>
+            </div>`;
+
+            $('#users').append(userHtml);
+        });
+    }
+
+</script>

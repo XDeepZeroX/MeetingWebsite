@@ -9,13 +9,14 @@ using MeetingWebsite.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingWebsite.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class SearchController : _BaseController
+    public class SearchController : _BaseApiController
     {
         public SearchController(UsersRepository userRepository) : base(userRepository)
         {
@@ -33,9 +34,13 @@ namespace MeetingWebsite.Controllers
 
             if (minAge < 0) minAge = 0;
 
-            var users = _userRepository.GetList()
-                            .Where(p => p.CityNormalize.Contains(city) && p.Sex == sex && p.Age >= minAge && p.Age <= maxAge)
-                            .ToList()
+            var query = _userRepository.GetList()
+                            .Where(p => p.Id != CurrentUserId() && p.Sex == sex && p.Age >= minAge && p.Age <= maxAge);
+            if (!string.IsNullOrEmpty(city))
+                query = query.Where(p => p.CityNormalize.Contains(city));
+
+            var users = (await query.Take(25)
+                            .ToListAsync())
                             .Select(p => new UserView(p))
                             .ToList();
             return Ok(users);

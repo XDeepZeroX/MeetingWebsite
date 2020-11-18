@@ -16,7 +16,7 @@ namespace MeetingWebsite.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PhotoController : _BaseController
+    public class PhotoController : _BaseApiController
     {
         private readonly UserPhotosRepository _photosRepository;
         IWebHostEnvironment _appEnvironment;
@@ -41,7 +41,7 @@ namespace MeetingWebsite.Controllers
                 if (photo == null)
                     return StatusCode(400);
 
-                var userId = await CurrentUserId();
+                var userId = CurrentUserId();
 
 
                 var photoId = await _photosRepository.GetListWithDeleted()
@@ -81,7 +81,7 @@ namespace MeetingWebsite.Controllers
             if (string.IsNullOrEmpty(path))
                 return BadRequest();
 
-            var userId = await CurrentUserId();
+            var userId = CurrentUserId();
             var photo = await _photosRepository.FirstOrDefault(p => p.UserId == userId && p.Path == path);
             if (photo != null)
                 if (!await _photosRepository.Remove(photo))

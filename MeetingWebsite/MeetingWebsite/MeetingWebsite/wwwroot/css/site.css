@@ -129,7 +129,7 @@ body {
 }
 
 #input-message {
-    height: 45px;
+    height: 33.5px;
 }
 
 .pointer {
@@ -165,4 +165,20 @@ body {
 }
 .message-body{
     font-size: 13px;
+}
+
+#messages {
+    min-height: 100%;
+}
+
+.menu-item:hover img{
+    width: 45px;
+}
+
+#menu{
+    min-width: 45px;
+    max-width: 45px;
+}
+.slider{
+    max-width: 100%;
 }

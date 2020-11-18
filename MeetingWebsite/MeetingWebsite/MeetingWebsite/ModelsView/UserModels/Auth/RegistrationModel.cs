@@ -31,7 +31,7 @@ namespace MeetingWebsite.ModelsView.Auth
         {
             errors = "";
 
-            if (RegexHelpers.Email.Match(Email).Value != Email)
+            if (Email == null && RegexHelpers.Email.Match(Email).Value != Email)
                 errors += "Не корректный Email\n";
 
             if (string.IsNullOrEmpty(Password) || Password.Length < 6)

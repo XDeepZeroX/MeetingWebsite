@@ -4,18 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.Models;
 using MeetingWebsite.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace MeetingWebsite.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class _BaseController : ControllerBase
+    public class BaseController : Controller
     {
         protected readonly UsersRepository _userRepository;
-        public _BaseController(UsersRepository userRepository)
+        public BaseController(UsersRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -43,18 +40,16 @@ namespace MeetingWebsite.Controllers
             return user;
         }
 
-        protected async Task<int> CurrentUserId()
+        /// <summary>
+        /// Получение идентификатора пользователя
+        /// </summary>
+        /// <returns></returns>
+        protected int CurrentUserId()
         {
-            var emailUser = CurrentEmail();
-            if (emailUser == null)
-                return 0;
-
-            var userId = await _userRepository.GetList()
-                .Where(p => p.Email == emailUser)
-                .Select(p => p.Id)
-                .FirstOrDefaultAsync();
-            return userId;
-
+            var val = User?.Claims?.FirstOrDefault(p => p.Type == "Id")?.Value;
+            if (val == null)
+                return -1;
+            return int.Parse(val);
         }
     }
 }

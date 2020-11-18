@@ -13,7 +13,7 @@ namespace MeetingWebsite.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class MessagesController : _BaseController
+    public class MessagesController : _BaseApiController
     {
         private readonly MessagesRepository _messagesRepository;
         private readonly DialogsRepository _dialogsRepository;
@@ -64,7 +64,7 @@ namespace MeetingWebsite.Controllers
             if (!await _dialogsRepository.Any(p => p.Id == dialogId))
                 return StatusCode(404, "Диалог с данным идентификатором не найден");
 
-            var userId = await CurrentUserId();
+            var userId = CurrentUserId();
             var messageDb = new Message()
             {
                 Text = message,
@@ -87,7 +87,7 @@ namespace MeetingWebsite.Controllers
         public async Task<IActionResult> Update(int dialogId, int messageId, string newText)
         {
             var message = await _messagesRepository.Find(messageId);
-            var currentUserId = await CurrentUserId();
+            var currentUserId = CurrentUserId();
             if (message.UserId != currentUserId)
                 return StatusCode(401, "Изменить сообщение может только его создатель");
 
@@ -110,7 +110,7 @@ namespace MeetingWebsite.Controllers
         public async Task<IActionResult> Delete(int dialogId, int messageId)
         {
             var message = await _messagesRepository.Find(messageId);
-            var currentUserId = await CurrentUserId();
+            var currentUserId = CurrentUserId();
             if (message.UserId != currentUserId)
                 return StatusCode(401, "Удалить сообщение может только его создатель");
 

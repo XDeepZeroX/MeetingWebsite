@@ -29,6 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\node_modules\bootstrap-slider\bower.json" />
+    <Content Include="wwwroot\node_modules\bootstrap-slider\composer.json" />
+    <Content Include="wwwroot\node_modules\bootstrap-slider\dependencies\css\highlightjs-github-theme.css" />
+    <Content Include="wwwroot\node_modules\bootstrap-slider\dist\css\bootstrap-slider.css" />
+    <Content Include="wwwroot\node_modules\bootstrap-slider\dist\css\bootstrap-slider.min.css" />
+    <Content Include="wwwroot\node_modules\bootstrap-slider\package.json" />
     <Content Include="wwwroot\node_modules\jquery.cookie\bower.json" />
     <Content Include="wwwroot\node_modules\jquery.cookie\component.json" />
     <Content Include="wwwroot\node_modules\jquery.cookie\cookie.jquery.json" />
@@ -39,6 +45,63 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\node_modules\bootstrap-slider\.github\CONTRIBUTING.md" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\.github\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\.github\PULL_REQUEST_TEMPLATE.md" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\.nvmrc" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\.sass-lint.yml" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\.travis.yml" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\CHANGELOG.md" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\dependencies\js\highlight.min.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\dependencies\js\jquery.min.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\dependencies\js\modernizr.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\dist\bootstrap-slider.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\dist\bootstrap-slider.min.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\Gruntfile.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\LICENSE.md" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\README.md" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\scripts\build-preview.sh" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\scripts\release.sh" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\scripts\update-gh-pages.sh" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\src\js\bootstrap-slider.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\src\sass\bootstrap-slider.scss" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\src\sass\_mixins.scss" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\src\sass\_rules.scss" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\src\sass\_variables.scss" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\phantom_bind_polyfill.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\AccessibilitySpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\AriaValueTextFormatterSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\AutoRegisterDataProvideSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\ConflictingOptionsSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\DestroyMethodTests.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\DraggingHandlesSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\ElementDataAttributesSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\EventsSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\FocusOptionSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\KeyboardSupportSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\LockToTicksSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\LogarithmicScaleSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\LowAndHighTrackSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\NamespaceSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\offMethodSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\OrientationSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\PublicMethodsSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\RangeHighlightsSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\RefreshMethodSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\ResizeSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\RtlOptionsSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\ScrollableBodySpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\ScrollableContainerSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\StepReachMaxValueSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\TickClickingBehaviorSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\TickLabelSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\TickMarksSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\TooltipMouseOverOptionSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\TooltipPositionOptionSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\TooltipSplitOptionSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\test\specs\TouchCapableSpec.js" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\tpl\index.tpl" />
+    <None Include="wwwroot\node_modules\bootstrap-slider\tpl\SpecRunner.tpl" />
     <None Include="wwwroot\node_modules\jquery.cookie\.jshintrc" />
     <None Include="wwwroot\node_modules\jquery.cookie\.npmignore" />
     <None Include="wwwroot\node_modules\jquery.cookie\.tm_properties" />

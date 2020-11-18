@@ -20,6 +20,7 @@ namespace MeetingWebsite.ModelsView.UserModels
             Email = user.Email;
             PhoneNumber = user.PhoneNumber;
             Photos = user.Photos.Select(p => p.Path).ToList();
+            BriefInformation = user.BriefInformation;
         }
 
         public string FirstName { get; set; }
@@ -30,6 +31,7 @@ namespace MeetingWebsite.ModelsView.UserModels
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string City { get; set; }
+        public string BriefInformation { get; set; }
 
         public List<string> Photos { get; set; }
     }

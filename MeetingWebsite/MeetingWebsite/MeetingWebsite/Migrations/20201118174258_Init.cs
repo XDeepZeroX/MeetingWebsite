@@ -25,7 +25,8 @@ namespace MeetingWebsite.Migrations
                     PhoneNumber = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<string>(nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
-                    Email = table.Column<string>(nullable: true)
+                    Email = table.Column<string>(nullable: true),
+                    BriefInformation = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

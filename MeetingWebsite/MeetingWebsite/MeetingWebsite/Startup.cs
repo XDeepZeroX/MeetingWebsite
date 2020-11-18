@@ -129,7 +129,7 @@ namespace MeetingWebsite
 
                 if (response.StatusCode == 401)
                 {
-                    response.Redirect($"/?redirectUrl={Uri.EscapeDataString(context.HttpContext.Request.Path)}"); //Login page
+                    response.Redirect($"/Account/Login?redirectUrl={Uri.EscapeDataString(context.HttpContext.Request.Path)}"); //Login page
                 }
             });
 

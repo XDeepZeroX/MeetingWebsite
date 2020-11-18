@@ -23,7 +23,7 @@ namespace MeetingWebsite.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class UserController : _BaseController
+    public class UserController : _BaseApiController
     {
         public UserController(UsersRepository userRepository) : base(userRepository)
         {
@@ -162,6 +162,7 @@ namespace MeetingWebsite.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim("Email", user.Email),
+                    new Claim("Id", user.Id.ToString()),
                 };
                 ClaimsIdentity claimsIdentity =
                 new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,

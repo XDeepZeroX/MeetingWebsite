@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bootstrap-slider": "^11.0.2",
     "jquery.cookie": "^1.4.1"
   }
 }
