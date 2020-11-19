@@ -1,4 +1,6 @@
-﻿@{
+﻿@model int?
+
+@{
     ViewData["Title"] = "Диалоги";
 }
 
@@ -9,68 +11,174 @@
         <div id="dialogs-title" class="text-center py-3">Диалоги</div>
         <div id="dialogs">
 
-            @* Диалог *@
-            <div class="d-flex flex-nowrap m-0 p-2 dialog-simple pointer">
-                <div class="rounded-circle dialog-icon">
-                    <p>КБ</p>
-                </div>
-                <div class="overflow-hidden pl-2 d-none d-sm-block">
-                    <p class="dialog-title m-0 p-0">Название диалога</p>
-                </div>
-            </div>
+            @*<div class="d-flex flex-nowrap m-0 p-2 dialog-simple pointer">
+                    <div class="rounded-circle dialog-icon">
+                        <p>КБ</p>
+                    </div>
+                    <div class="overflow-hidden pl-2 d-none d-sm-block">
+                        <p class="dialog-title m-0 p-0">Название диалога</p>
+                    </div>
+                </div>*@
 
         </div>
     </div>
-    <div class="h-100 w-75 pb-2 d-flex flex-column" style="background: rgba(0, 0, 0, 0.26);">
-        <div class="px-3 py-3 dialog-title border-bottom" style="font-size: 1.2rem;">Название диалога</div>
+    <div class="h-100 w-75 pb-3 d-flex flex-column">
+        <div id="dialog-title" class="px-3 py-3 dialog-title border-bottom" style="font-size: 1.2rem;">Название диалога</div>
         <div class="w-100 h-100 py-3 flex-grow-1 overflow-auto">
-            <div class="px-5 d-flex flex-column justify-content-end" id="messages">
-
-                @for (int i = 0; i < 5; i++)
-                {
-
-                    <div class="row m-0 flex-nowrap message" idMessage="@i">
-                        <div class="rounded-circle user-icon">
-                            <p>КБ</p>
-                        </div>
-                        <div class="d-flex flex-column">
-                            @* Имя пользователя и дата сообщения *@
-                            <div class="row m-0 p-0 align-content-end">
-                                <p class="user-name pl-2 m-0">Имя Пользователя</p>
-                                <p class="message-time pl-2 m-0">21:10</p>
-                            </div>
-                            @* Текст сообщения *@
-                            <p class="pl-2 message-body">
-                                Сообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинное
-                            </p>
-
-                        </div>
+            @if (Model == null)
+            {
+                <div class="px-5 d-flex flex-column center-child" id="messages">
+                    <div class="d-flex flex-column align-items-center" style="max-width: 180px;">
+                        <img src="/images/messages.png" width="66" />
+                        <p class="text-center">
+                            Выберите чат или создайте новую беседу
+                        </p>
                     </div>
-                }
-            </div>
+                </div>
+
+            }
+            else
+            {
+                <div class="px-5 d-flex flex-column justify-content-end position-relative" id="messages">
+                    <img src="~/images/preloader.svg" class="center" />
+
+
+                    @*<div class="row m-0 flex-nowrap message" id="message-$id">
+                            <div class="rounded-circle user-icon">
+                                <p>КБ</p>
+                            </div>
+                            <div class="d-flex flex-column">-->
+                                <!-- Имя пользователя и дата сообщения -->
+                                <!--<div class="row m-0 p-0 align-content-end">
+                                    <p class="user-name pl-2 m-0">Имя Пользователя</p>
+                                    <p class="message-time pl-2 m-0">21:10</p>
+                                </div>-->
+                                <!-- Текст сообщения-->
+                                <!--<p class="pl-2 message-body">
+                                    Сообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинное
+                                </p>
+
+                            </div>
+                        </div>*@
+
+                </div>
+            }
         </div>
-        <form method="POST" action="/api/Messages" class="px-3 d-flex" onsubmit="SendMessage(this, event)">
-            <input type="text" placeholder="Введите сообщение..." class="flex-grow-1 form-control" id="input-message" />
-            <img src="~/images/send.png" width="33.5px" class="ml-4 mr-1 pointer" />
-        </form>
+        @if (Model != null)
+        {
+            <form method="POST" action="/api/Messages" id="send-message-form" class="px-3 d-flex" onsubmit="AddMessage(this, event)">
+                <input type="text" placeholder="Введите сообщение..." class="flex-grow-1 form-control" id="input-message" />
+                <img src="~/images/send.png" width="33.5px" class="ml-4 mr-1 pointer" onclick="AddMessage($('#send-message-form'), event)" />
+            </form>
+        }
     </div>
 </div>
 
 <script>
+    var selectDialogId = @(Model ?? -1);
+    var usersDialog = [];
+
     $(() => {
-        UpdateScrollMessages();
-    });
+         //UpdateScrollMessages();
+        getDialogs();
+     });
 
-
-    //Обработка события отправки сообщения по Enter
-    function OnEnter(event) {
-        if (event.which == 13 || event.keyCode == 13) {
-            console.log(true);
-            return true;
-        }
-        console.log(false);
-        return true;
+    function getDialogs() {
+        send("/api/Dialogs", "GET", renderDialogs)
     }
+
+    function renderDialogs(response) {
+        if (response.status == 200) {
+            var dialogs = response.responseJSON;
+            var currentUserId = parseInt(ParseJwt($.cookie("Authorization")).Id);
+
+            $('#dialogs').html('');
+            dialogs.forEach((dialog) => {
+                var otherUsers = dialog.users.filter(p => p.id != currentUserId);
+
+                //Инициалы собеседника
+                var dialogIcon = otherUsers[0].firstName[0] + otherUsers[0].lastName[0];
+                if (otherUsers.length > 1)
+                    dialogIcon = otherUsers[0].firstName[0] + otherUsers[1].firstName[0];
+
+                var dialogName = dialog.title;
+                if (dialogName == undefined || dialogName == '') {
+                    if (otherUsers.length == 1) {
+                        dialogName = `${otherUsers[0].firstName} ${otherUsers[0].lastName}`;
+                    } else {
+                        dialogName = otherUsers.map((user) => user.firstName).join(', ');
+                    }
+                }
+
+
+                $('#dialogs').append(`
+                    <div class="d-flex flex-nowrap m-0 p-2 dialog-simple pointer ${dialog.id == selectDialogId ? 'active-dialog': ''}" id="dialog-${dialog.id}">
+                        <div class="rounded-circle dialog-icon">
+                            <p>${dialogIcon.toUpperCase()}</p>
+                        </div>
+                        <div class="overflow-hidden pl-2 d-none d-sm-block">
+                            <p class="dialog-title m-0 p-0">${dialogName}</p>
+                        </div>
+                    </div>
+                `);
+            });
+
+
+            if (selectDialogId != -1) {
+                usersDialog = dialogs.filter(p => p.id == selectDialogId)[0].users;
+                getDialogMessages(selectDialogId);
+            }
+        }
+    }
+
+    function getDialogMessages(id) {
+        send(`/api/Messages/${id}`, "GET", renderDialogMessages);
+    }
+
+    function renderDialogMessages(response) {
+        $("#messages").html('');
+        if (response.status == 200) {
+            if (response.responseJSON.length == 0)
+                $("#messages").append('<p class="center">Здесь будет выводиться история переписки.</p>');
+            else {
+                response.responseJSON.sortBy('dateCreate').forEach(message => {
+                    var user = usersDialog.filter(p => p.id == message.userId)[0];
+                    var userInitials = user.firstName[0] + user.lastName[0];
+                    var date = new Date(message.dateCreateUnix * 1000 - new Date().getTimezoneOffset() * 60);
+
+                    $("#messages").append(`
+                        <div class="row m-0 flex-nowrap message" id="message-${message.id}" time-stamp-unix="${message.dateCreateUnix}">
+                            <div class="rounded-circle user-icon">
+                                <p>${userInitials.toUpperCase()}</p>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <div class="row m-0 p-0 align-content-end">
+                                    <p class="user-name pl-2 m-0">${user.firstName} ${user.lastName}</p>
+                                    <p class="message-time pl-2 m-0">${OnlyTime(date)}</p>
+                                </div>
+                                <p class="pl-2 message-body">
+                                    ${message.text}
+                                </p>
+
+                            </div>
+                        </div>
+                        `);
+                });
+            }
+        } else {
+            alert('Не удалось загрузить историю сообщений');
+        }
+    }
+
+    ////Обработка события отправки сообщения по Enter
+    //function OnEnter(event) {
+    //    if (event.which == 13 || event.keyCode == 13) {
+    //        console.log(true);
+    //        return true;
+    //    }
+    //    console.log(false);
+    //    return true;
+    //}
 
 
     //Опускает скролл сообщений в самый низ
@@ -79,17 +187,18 @@
         element.scrollTop = element.scrollHeight;
     }
 
-    // Получение списка диалогов
-    function GetDialogs() {
+    //// Получение списка диалогов
+    //function GetDialogs() {
 
 
-    }
+    //}
     // Отправка сообщения
-    function SendMessage(form, event) {
+    function AddMessage(form, event) {
         event.preventDefault();
         var user = GetCurrentUserInfo();
+        var guid = generateUUID();
         $("#messages").append(`
-                        <div class="row m-0 flex-nowrap message sending-message"  idMessage="-1" guid="${generateUUID()}">
+                        <div class="row m-0 flex-nowrap message sending-message"  id="message--1" guid="${guid}">
                             <div class="rounded-circle user-icon">
                                 <p>${(user.firstName[0] + user.lastName[0]).toUpperCase()}</p>
                             </div>
@@ -108,15 +217,29 @@
                         </div>`);
         UpdateScrollMessages();
 
-        //$.ajax({
-        //    url: '/api/Messages',
-        //    method: "POST",
-        //    data: {
+        var message = $("#input-message").val();
+        $("#input-message").val('');
+        $.ajax({
+            url: `/api/Messages?dialogId=${selectDialogId}&message=${message}`,
+            method: "POST",
+            //contentType: "application/json; charset=UTF-8",
+            //data: JSON.stringify({
+            //    'dialogId': selectDialogId,
+            //    'message': message
+            //}),
+            complete: (response) => {
+                if (response.status == 200) {
+                    $(`#message--1[guid=${guid}]`).attr('id', `message-${response.responseText}`);
+                } else {
+                    // TODO: Оповестить пользвоателя о неудачной отправке сообщения
+                }
 
-        //    }
-        //})
+            }
+        })
 
 
     }
+
+
 
 </script>

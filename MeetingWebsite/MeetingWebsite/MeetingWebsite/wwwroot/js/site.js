@@ -31,7 +31,11 @@ function send(action, method, then, data) {
 
 //Возвращает время в формате HH:mm
 function OnlyTime(date) {
-    return `${date.getHours()}:${date.getMinutes()}`;
+    var minutes = date.getMinutes().toString();
+    if (minutes.length == 1)
+        minutes = '0' + minutes;
+
+    return `${date.getHours()}:${minutes}`;
 }
 
 // Парсит JWT токен
@@ -98,5 +102,12 @@ function GetUserInfoFromServer() {
         complete: response => {
             localStorage.setItem("user-info", JSON.stringify(response.responseJSON));
         }
+    });
+}
+
+// Сортировка по полю
+Array.prototype.sortBy = function (p) {
+    return this.slice(0).sort(function (a, b) {
+        return (a[p] > b[p]) ? 1 : (a[p] < b[p]) ? -1 : 0;
     });
 }

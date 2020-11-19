@@ -1,30 +1,28 @@
-﻿using System;
+﻿using MeetingWebsite.Models;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MeetingWebsite.Models
+namespace MeetingWebsite.ModelsView.Messages
 {
-    public class Message : BaseEntity
+    public class MessageView
     {
-        public Message()
+        public MessageView(Message message)
         {
-            DateCreate = DateTime.UtcNow;
+            Id = message.Id;
+            UserId = message.UserId;
+            Text = message.Text;
+            DateCreate = message.DateCreate;
+            DateCreateUnix = message.DateCreateUnix;
         }
+
+        public int Id { get; set; }
+
         /// <summary>
         /// Создатель сообщения
         /// </summary>
-        [ForeignKey("User")]
         public int UserId { get; set; }
-        public User User { get; set; }
-
-        /// <summary>
-        /// Идентификатор диалога
-        /// </summary>
-        [ForeignKey("Dialog")]
-        public int DialogId { get; set; }
-        public Dialog Dialog { get; set; }
 
         /// <summary>
         /// Содержимое сообщения
@@ -36,7 +34,6 @@ namespace MeetingWebsite.Models
         /// </summary>
         public long DateCreateUnix { get; set; }
 
-        [NotMapped]
         public DateTime DateCreate
         {
             get => DateTime.UnixEpoch.AddSeconds(DateCreateUnix);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.Models;
+using MeetingWebsite.ModelsView.Messages;
 using MeetingWebsite.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -44,7 +45,7 @@ namespace MeetingWebsite.Controllers
 
             var result = query.Take(count).ToList();
 
-            return Ok(result);
+            return Ok(result.Select(p => new MessageView(p)).ToList());
         }
 
 

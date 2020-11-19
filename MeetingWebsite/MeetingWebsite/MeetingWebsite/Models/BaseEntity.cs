@@ -22,8 +22,8 @@ namespace MeetingWebsite.Models
         [JsonIgnore]
         public virtual DateTime Update
         {
-            get => new DateTime(UpdateUnix * 1000);
-            set => UpdateUnix = value.Ticks / 1000;
+            get => DateTime.UnixEpoch.AddSeconds(UpdateUnix);
+            set => UpdateUnix = (int)((value - DateTime.UnixEpoch).TotalSeconds);
         }
 
         [System.Text.Json.Serialization.JsonIgnore]

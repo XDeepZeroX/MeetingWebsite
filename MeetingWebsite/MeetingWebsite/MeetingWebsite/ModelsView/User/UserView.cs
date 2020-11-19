@@ -11,6 +11,7 @@ namespace MeetingWebsite.ModelsView.UserModels
         public UserView() { }
         public UserView(User user)
         {
+            Id = user.Id;
             FirstName = user.FirstName;
             LastName = user.LastName;
             Age = user.Age;
@@ -22,7 +23,7 @@ namespace MeetingWebsite.ModelsView.UserModels
             Photos = user.Photos.Select(p => p.Path).ToList();
             BriefInformation = user.BriefInformation;
         }
-
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }

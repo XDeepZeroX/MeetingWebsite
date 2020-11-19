@@ -83,8 +83,11 @@
 </div>
 
 <script>
+    var timeout = -10;
+    var oldformSerialize = '';
     $(() => {
         //onChangeSettings();
+        oldformSerialize = $('#settings').serialize();
     })
 
 
@@ -94,14 +97,12 @@
     function openDialog(response) {
         debugger;
         if (response.status == 200)
-            window.location = '/' // TODO: Перейти на страницу диалога
+            window.location = `/Dialogs?id=${response.responseText}`;// TODO: Перейти на страницу диалога
         else
             alert(response.responseText);
     }
 
 
-    var timeout = -10;
-    var oldformSerialize = '';
 
     // Событие при изменении настроек поиска
     function onChangeSettings() {
@@ -134,7 +135,7 @@
             var briefInformation = 'Пользователь не добавил описание';
             if (user.briefInformation != null && user.briefInformation.length > 0)
                 briefInformation = user.briefInformation;
-
+            debugger;
             var userHtml = `
                 <div class="d-flex justify-content-between flex-nowrap message">
                     <div class="row m-0 flex-nowrap">

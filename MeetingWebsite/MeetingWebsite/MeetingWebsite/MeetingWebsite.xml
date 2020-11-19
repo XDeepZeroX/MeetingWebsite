@@ -156,6 +156,41 @@
             <param name="value">Исходная строка</param>
             <returns>ХЭШ</returns>
         </member>
+        <member name="P:MeetingWebsite.ModelsView.Dialogs.DialogView.Title">
+            <summary>
+            Название диалога
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.ModelsView.Dialogs.DialogView.Users">
+            <summary>
+            Участники диалога
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.ModelsView.Dialogs.DialogView.CreateUserId">
+            <summary>
+            Идентификатор создателя диалога
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.ModelsView.Dialogs.DialogView.CreateUser">
+            <summary>
+            Создатель диалога
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.ModelsView.Messages.MessageView.UserId">
+            <summary>
+            Создатель сообщения
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.ModelsView.Messages.MessageView.Text">
+            <summary>
+            Содержимое сообщения
+            </summary>
+        </member>
+        <member name="P:MeetingWebsite.ModelsView.Messages.MessageView.DateCreateUnix">
+            <summary>
+            Дата создания сообщения
+            </summary>
+        </member>
         <member name="P:MeetingWebsite.ModelsView.Auth.RegistrationModel.Nickname">
             <summary>
             Никнейм пользователя

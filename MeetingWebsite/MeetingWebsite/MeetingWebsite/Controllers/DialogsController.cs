@@ -12,11 +12,9 @@ namespace MeetingWebsite.Controllers
     public class DialogsController : Controller
     {
         
-        public IActionResult Index()
+        public IActionResult Index(int? id = null)
         {
-            if (!User.Identity.IsAuthenticated)
-                return Redirect(AuthOptions.UrlLoginPage);
-            return View();
+            return View(id);
         }
     }
 }

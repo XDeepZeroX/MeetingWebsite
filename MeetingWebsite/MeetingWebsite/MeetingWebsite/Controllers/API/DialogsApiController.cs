@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.Models;
+using MeetingWebsite.ModelsView.Dialogs;
 using MeetingWebsite.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -31,15 +32,24 @@ namespace MeetingWebsite.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Dialogs()
         {
-            var emailUser = CurrentEmail();
+            var userId = CurrentUserId();
 
-            var dialogs = (await _userRepository.GetList()
+            //var dialogs = (await _userRepository.GetList()
+            //    .Include(p => p.DialogsUsers)
+            //    .ThenInclude(p => p.Dialog)
+            //    .FirstOrDefaultAsync(p => p.Email == emailUser)
+            //    )?.DialogsUsers?.Select(p => p.Dialog).ToList();
+
+            var dialogs = await _dialogsRepository.GetList()
                 .Include(p => p.DialogsUsers)
-                .ThenInclude(p => p.Dialog)
-                .FirstOrDefaultAsync(p => p.Email == emailUser)
-                )?.DialogsUsers?.Select(p => p.Dialog).ToList();
+                .ThenInclude(p => p.User)
+                .Where(p => p.DialogsUsers.Any(x => x.UserId == userId))
+                .ToListAsync();
 
-            return Ok(dialogs ?? new List<Dialog>());
+            var result = dialogs
+                .Select(p => new DialogView(p)).ToList();
+
+            return Ok(result ?? new List<DialogView>());
         }
 
         /// <summary>
@@ -60,10 +70,18 @@ namespace MeetingWebsite.Controllers
 
                 if (usersId.Count == 2)
                 {
-                    var _dialog = await _dialogsRepository.GetList()
+                    var _query = _dialogsRepository.GetList()
                         .Include(p => p.DialogsUsers)
-                        .Where(p => p.DialogsUsers.Count == 2)
-                        .FirstOrDefaultAsync(p => p.DialogsUsers.Any(x => x.User.Id == usersId[0]) && p.DialogsUsers.Any(x => x.User.Id == usersId[1]));
+                        .Where(p => p.DialogsUsers.Count == 2);
+
+                    foreach (var userId in usersId)
+                    {
+                        _query = _query.Where(p => p.DialogsUsers.Any(x => x.UserId == userId));
+                    }
+
+
+                    var _dialog = await _query.FirstOrDefaultAsync();
+                    //.FirstOrDefaultAsync(p => p.DialogsUsers.Any(x => x.User.Id == usersId[0]) && p.DialogsUsers.Any(x => x.User.Id == usersId[1]));
                     if (_dialog != null)
                         return Ok(_dialog.Id);
                 }

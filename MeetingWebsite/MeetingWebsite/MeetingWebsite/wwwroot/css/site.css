@@ -85,11 +85,20 @@ body {
         margin-right: -50%;
         transform: translate(-50%, -50%);
     }
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
 
 .w-90 {
     width: 90%;
 }
 
+.active-dialog,
 .dialog-simple:hover {
     background: #b2b2b23b;
 }
@@ -129,7 +138,7 @@ body {
 }
 
 #input-message {
-    height: 33.5px;
+    height: 38.5px;
 }
 
 .pointer {

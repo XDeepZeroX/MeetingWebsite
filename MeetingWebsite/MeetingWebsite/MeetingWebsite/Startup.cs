@@ -169,7 +169,8 @@ namespace MeetingWebsite
             services
                 .AddTransient(typeof(UsersRepository))
                 .AddTransient(typeof(DialogsRepository))
-                .AddTransient(typeof(UserPhotosRepository));
+                .AddTransient(typeof(UserPhotosRepository))
+                .AddTransient(typeof(MessagesRepository));
         }
     }
 }

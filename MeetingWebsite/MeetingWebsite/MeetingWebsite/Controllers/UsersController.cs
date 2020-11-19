@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeetingWebsite.Controllers
 {
+    [Authorize]
     public class UsersController : BaseController
     {
         public UsersController(UsersRepository userRepository) : base(userRepository)

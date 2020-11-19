@@ -16,15 +16,19 @@
   <ItemGroup>
     <Compile Remove="wwwroot\node_modules\%40pnotify\**" />
     <Compile Remove="wwwroot\node_modules\pnotify\**" />
+    <Compile Remove="wwwroot\node_modules\spin.js\**" />
     <Compile Remove="wwwroot\node_modules\tata-js\**" />
     <Content Remove="wwwroot\node_modules\%40pnotify\**" />
     <Content Remove="wwwroot\node_modules\pnotify\**" />
+    <Content Remove="wwwroot\node_modules\spin.js\**" />
     <Content Remove="wwwroot\node_modules\tata-js\**" />
     <EmbeddedResource Remove="wwwroot\node_modules\%40pnotify\**" />
     <EmbeddedResource Remove="wwwroot\node_modules\pnotify\**" />
+    <EmbeddedResource Remove="wwwroot\node_modules\spin.js\**" />
     <EmbeddedResource Remove="wwwroot\node_modules\tata-js\**" />
     <None Remove="wwwroot\node_modules\%40pnotify\**" />
     <None Remove="wwwroot\node_modules\pnotify\**" />
+    <None Remove="wwwroot\node_modules\spin.js\**" />
     <None Remove="wwwroot\node_modules\tata-js\**" />
   </ItemGroup>
 

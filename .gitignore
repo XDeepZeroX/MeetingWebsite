@@ -133,3 +133,5 @@ dmypy.json
 **/.vs
 **/.idea
 **/node_modules
+/MeetingWebsite/MeetingWebsite/MeetingWebsite/Meeting.db-shm
+/MeetingWebsite/MeetingWebsite/MeetingWebsite/Meeting.db-wal
