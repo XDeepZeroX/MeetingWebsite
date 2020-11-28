@@ -65,6 +65,24 @@ namespace MeetingWebsite.Repositories
             return false;
         }
 
+        public virtual async Task<bool> RemoveRange(IEnumerable<T> models)
+        {
+            try
+            {
+                foreach (var model in models)
+                {
+                    model.IsDelete = true;
+                }
+                _db.UpdateRange(models);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public virtual IQueryable<T> GetList()
         {
             return _db.Set<T>().AsNoTracking().Where(p => !p.IsDelete).AsQueryable();

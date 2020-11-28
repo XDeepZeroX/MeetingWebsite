@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MeetingWebsite.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingWebsite.Controllers
 {
@@ -18,6 +19,7 @@ namespace MeetingWebsite.Controllers
         public IActionResult Index()
         {
             var users = _userRepository.GetList()
+                .Include(p => p.Photos)
                 .Where(p => p.Id != CurrentUserId())
                 .Take(25)
                 .ToList();

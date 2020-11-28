@@ -85,6 +85,7 @@ body {
         margin-right: -50%;
         transform: translate(-50%, -50%);
     }
+
 .center {
     margin: 0;
     position: absolute;
@@ -168,11 +169,13 @@ body {
     font-weight: 700;
     color: #2a5885;
 }
+
 .message-time {
     font-size: 12.5px;
     color: rgba(119,126,140,.6);
 }
-.message-body{
+
+.message-body {
     font-size: 13px;
 }
 
@@ -180,14 +183,68 @@ body {
     min-height: 100%;
 }
 
-.menu-item:hover img{
+.message {
+    padding-right: 40px;
+}
+
+    .message:hover .buttons-message > * {
+        display: block;
+    }
+
+.buttons-message {
+    min-width: 40px;
+    max-width: 40px;
+}
+
+    .buttons-message > * {
+        display: none;
+    }
+
+        .buttons-message > *:first-child {
+            margin-right: 9px;
+        }
+
+    .buttons-message img {
+        width: 15px;
+        height: 15px;
+    }
+
+.menu-item:hover img {
     width: 45px;
 }
 
-#menu{
+#menu {
     min-width: 45px;
     max-width: 45px;
 }
-.slider{
+
+.slider {
     max-width: 100%;
 }
+
+#send-message-form {
+    font-size: 13px;
+}
+
+
+.edit-message {
+    background: #f0f2f5;
+}
+
+.btn-cancel {
+    padding: 4px 12px;
+    background: #6c757d6b;
+    border-radius: 5px;
+}
+
+    .btn-cancel:hover {
+        background: rgba(108, 117, 125, 0.54);
+    }
+
+#progress-delete {
+    height: 0.3rem
+}
+
+    #progress-delete > svg {
+        vertical-align: top;
+    }

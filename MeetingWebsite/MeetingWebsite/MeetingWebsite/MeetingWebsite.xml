@@ -4,6 +4,12 @@
         <name>MeetingWebsite</name>
     </assembly>
     <members>
+        <member name="M:MeetingWebsite.Controllers.AccountController.Account">
+            <summary>
+            Настройки аккаунта пользователя
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:MeetingWebsite.Controllers.DialogsApiController.Dialogs">
             <summary>
             Возвращает список диалогов пользователя
@@ -61,6 +67,13 @@
             </summary>
             <param name="dialogId">Идентификатор диалога</param>
             <param name="messageId">Идентификатор сообщения</param>
+        </member>
+        <member name="M:MeetingWebsite.Controllers.MessagesController.DeleteRange(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Удаляет список сообщений
+            </summary>
+            <param name="messagesId">Идентификаторы сообщений</param>
+            <returns>200 - если успешно</returns>
         </member>
         <member name="M:MeetingWebsite.Controllers.PhotoController.UploadPhoto(Microsoft.AspNetCore.Http.IFormFile)">
             <summary>

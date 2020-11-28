@@ -46,6 +46,17 @@
     <Content Include="wwwroot\node_modules\jquery.cookie\package.json" />
     <Content Include="wwwroot\node_modules\jquery.cookie\test\index.html" />
     <Content Include="wwwroot\node_modules\jquery.cookie\test\malformed_cookie.html" />
+    <Content Include="wwwroot\node_modules\progressbar.js\.jscs.json" />
+    <Content Include="wwwroot\node_modules\progressbar.js\bower.json" />
+    <Content Include="wwwroot\node_modules\progressbar.js\docs\img\animate-call.png" />
+    <Content Include="wwwroot\node_modules\progressbar.js\docs\img\animate-init.png" />
+    <Content Include="wwwroot\node_modules\progressbar.js\docs\img\animation.gif" />
+    <Content Include="wwwroot\node_modules\progressbar.js\docs\pip-requirements.txt" />
+    <Content Include="wwwroot\node_modules\progressbar.js\local-dev\index.html" />
+    <Content Include="wwwroot\node_modules\progressbar.js\local-dev\main.css" />
+    <Content Include="wwwroot\node_modules\progressbar.js\package.json" />
+    <Content Include="wwwroot\node_modules\progressbar.js\testem.json" />
+    <Content Include="wwwroot\node_modules\progressbar.js\test\testem.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -117,6 +128,41 @@
     <None Include="wwwroot\node_modules\jquery.cookie\README.md" />
     <None Include="wwwroot\node_modules\jquery.cookie\test\server.js" />
     <None Include="wwwroot\node_modules\jquery.cookie\test\tests.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\.editorconfig" />
+    <None Include="wwwroot\node_modules\progressbar.js\.env.sample" />
+    <None Include="wwwroot\node_modules\progressbar.js\.eslintrc" />
+    <None Include="wwwroot\node_modules\progressbar.js\.travis.yml" />
+    <None Include="wwwroot\node_modules\progressbar.js\dist\progressbar.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\dist\progressbar.min.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\dist\progressbar.min.js.map" />
+    <None Include="wwwroot\node_modules\progressbar.js\docs\api\general.md" />
+    <None Include="wwwroot\node_modules\progressbar.js\docs\api\parameters.md" />
+    <None Include="wwwroot\node_modules\progressbar.js\docs\api\path.md" />
+    <None Include="wwwroot\node_modules\progressbar.js\docs\api\shape.md" />
+    <None Include="wwwroot\node_modules\progressbar.js\docs\contributing.md" />
+    <None Include="wwwroot\node_modules\progressbar.js\docs\index.md" />
+    <None Include="wwwroot\node_modules\progressbar.js\Gruntfile.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\karma.conf.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\LICENSE" />
+    <None Include="wwwroot\node_modules\progressbar.js\local-dev\main.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\mkdocs.yml" />
+    <None Include="wwwroot\node_modules\progressbar.js\README.md" />
+    <None Include="wwwroot\node_modules\progressbar.js\saucelabs-browsers.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\src\circle.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\src\line.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\src\main.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\src\path.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\src\semicircle.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\src\shape.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\src\square.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\src\utils.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\test\path-behaviour.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\test\shape-behaviour.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\test\test-all.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\test\test-utils.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\tools\lint.sh" />
+    <None Include="wwwroot\node_modules\progressbar.js\tools\release.js" />
+    <None Include="wwwroot\node_modules\progressbar.js\tools\test.sh" />
   </ItemGroup>
 
   <ItemGroup>
@@ -128,6 +174,7 @@
     <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.win-x86" Version="3.7.2" />
     <PackageReference Include="JavaScriptEngineSwitcher.Extensions.MsDependencyInjection" Version="3.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9">

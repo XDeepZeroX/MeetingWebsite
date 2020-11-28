@@ -35,6 +35,7 @@ namespace MeetingWebsite.Controllers
             if (minAge < 0) minAge = 0;
 
             var query = _userRepository.GetList()
+                            .Include(p => p.Photos)
                             .Where(p => p.Id != CurrentUserId() && p.Sex == sex && p.Age >= minAge && p.Age <= maxAge);
             if (!string.IsNullOrEmpty(city))
                 query = query.Where(p => p.CityNormalize.Contains(city));

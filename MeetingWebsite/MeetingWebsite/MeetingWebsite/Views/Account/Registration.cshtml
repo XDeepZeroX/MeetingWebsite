@@ -45,7 +45,7 @@
 
     function OnRegistration(response) {
         if (response.status == 200) {
-            $.cookie("Authorization", `Bearer ${response.responseJSON.accessToken}`, { path: '/' });
+            $.cookie("Authorization", `Bearer ${response.responseJSON.access_token}`, { path: '/' });
             GetUserInfoFromServer();
             var redirectUrl = new URL(window.location.href).searchParams.get("redirectUrl")
             //Если есть куда, то перенаправить

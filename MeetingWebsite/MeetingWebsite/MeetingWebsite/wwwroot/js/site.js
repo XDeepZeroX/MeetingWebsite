@@ -24,7 +24,7 @@ function send(action, method, then, data) {
             if (then != undefined)
                 then(response);
         },
-        data: data,
+        data: typeof (data) == typeof ('') ? data : JSON.stringify(data),
         contentType: "application/json; charset=UTF-8",
     });
 }
@@ -110,4 +110,17 @@ Array.prototype.sortBy = function (p) {
     return this.slice(0).sort(function (a, b) {
         return (a[p] > b[p]) ? 1 : (a[p] < b[p]) ? -1 : 0;
     });
+}
+
+//Object.prototype.get = function (key) {
+//    return this[key] ?? '';
+//}
+
+function get(dict, keys) {
+    var spl = keys.split('>');
+    var res = dict[spl[0]] ?? '';
+    for (var i = 1; i < spl.length; i++) {
+        res = res[spl[i]] ?? '';
+    }
+    return res;
 }

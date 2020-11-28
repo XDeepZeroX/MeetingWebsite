@@ -22,8 +22,8 @@
 
         </div>
     </div>
-    <div class="h-100 w-75 pb-3 d-flex flex-column">
-        <div id="dialog-title" class="px-3 py-3 dialog-title border-bottom" style="font-size: 1.2rem;">Название диалога</div>
+    <div class="h-100 w-75 d-flex flex-column">
+        <div id="dialog-title" class="px-3 py-3 dialog-title border-bottom" style="font-size: 1.2rem;">Выберите чат или создайте новую беседу</div>
         <div class="w-100 h-100 py-3 flex-grow-1 overflow-auto">
             @if (Model == null)
             {
@@ -39,36 +39,51 @@
             }
             else
             {
-                <div class="px-5 d-flex flex-column justify-content-end position-relative" id="messages">
+                <div class="d-flex flex-column justify-content-end position-relative" id="messages">
                     <img src="~/images/preloader.svg" class="center" />
 
 
-                    @*<div class="row m-0 flex-nowrap message" id="message-$id">
+                    <div class="d-flex m-0 flex-nowrap message justify-content-between" id="message-$id">
+                        <div class="d-flex">
                             <div class="rounded-circle user-icon">
                                 <p>КБ</p>
                             </div>
-                            <div class="d-flex flex-column">-->
-                                <!-- Имя пользователя и дата сообщения -->
-                                <!--<div class="row m-0 p-0 align-content-end">
+                            <div class="d-flex flex-column">
+                                <div class="row m-0 p-0 align-content-end">
                                     <p class="user-name pl-2 m-0">Имя Пользователя</p>
                                     <p class="message-time pl-2 m-0">21:10</p>
-                                </div>-->
-                                <!-- Текст сообщения-->
-                                <!--<p class="pl-2 message-body">
-                                    Сообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинноеСообщение очень длинное
+                                </div>
+                                <p class="pl-2 message-body">
+                                    1
                                 </p>
 
                             </div>
-                        </div>*@
+                        </div>
+                        <div class="d-flex buttons-message">
+                            <img src="/images/edit.png" class="pointer" onclick="editMessage('message-$id', event)" />
+                            <img src="/images/broom.png" class="pointer" onclick="console.log('delete')" />
+                        </div>
+                    </div>
 
                 </div>
             }
         </div>
         @if (Model != null)
         {
-            <form method="POST" action="/api/Messages" id="send-message-form" class="px-3 d-flex" onsubmit="AddMessage(this, event)">
-                <input type="text" placeholder="Введите сообщение..." class="flex-grow-1 form-control" id="input-message" />
-                <img src="~/images/send.png" width="33.5px" class="ml-4 mr-1 pointer" onclick="AddMessage($('#send-message-form'), event)" />
+            <form method="POST" action="/api/Messages" id="send-message-form" class="px-3 pb-3 pt-3 d-flex flex-column border-top" onsubmit="AddMessage(this, event)">
+                <div class="row m-0 py-1 justify-content-between" id="delete-message-notify" style="display: none;">
+                    <p class="m-0">Сообщение удалено</p>
+                    <p class="m-0 pointer btn-cancel" onclick="cancelDeleteMessage()">Отмена</p>
+                    <div id="progress-delete" class="w-100 my-1"></div>
+                </div>
+                <div class="row m-0 py-1 justify-content-between" id="edit-message-notify" style="display: none;">
+                    <p class="m-0">Редактирование сообщения</p>
+                    <p class="m-0 pointer" style="font-size:17px;" onclick="cancelEditMessage()">✘</p>
+                </div>
+                <div class="d-flex">
+                    <input type="text" placeholder="Введите сообщение..." class="flex-grow-1 form-control" id="input-message" />
+                    <img src="~/images/send.png" width="33.5px" class="ml-4 mr-1 pointer" onclick="AddMessage($('#send-message-form'), event)" />
+                </div>
             </form>
         }
     </div>
@@ -77,16 +92,102 @@
 <script>
     var selectDialogId = @(Model ?? -1);
     var usersDialog = [];
+    var currentDialog = undefined;
+    var currentDialogName = '';
 
     $(() => {
          //UpdateScrollMessages();
         getDialogs();
      });
 
+    var timerDeleteMessage = undefined;
+
+    var deleteMessages = [];
+
+    //Удаление сообщения
+    function deleteMessage(id) {
+        $("#delete-message-notify").show();
+        clearTimeout(timerDeleteMessage);
+        deleteMessages.push(id);
+
+        $('#progress-delete').html('');
+        var bar = new ProgressBar.Line(document.getElementById('progress-delete'), {
+            duration: 5000,
+            color: '#6c757d2b',
+            svgStyle: { width: '100%', height: '100%' },
+        });
+        bar.animate(1);  // Number from 0.0 to 1.0
+
+
+
+        timerDeleteMessage = setTimeout(() => {
+            sendDeleteMessages();
+        }, 5000)
+    }
+
+    //Отправлет на сервер удаленные сообщения
+    function sendDeleteMessages () {
+        let uniqueDeleteMessages = [...new Set(deleteMessages)];
+
+        send("/api/Messages", "DELETE", (response) => {
+            $("#delete-message-notify").hide();
+            if (response.status == 200) {
+                uniqueDeleteMessages.forEach((id) => {
+                    $(`#message-${id}`).remove();
+                });
+            }
+        }, uniqueDeleteMessages);
+
+        deleteMessages = [];
+    }
+    //Отмена удаления сообщения
+    function cancelDeleteMessage() {
+        if (timerDeleteMessage != undefined) {
+            clearTimeout(timerDeleteMessage);
+            timerDeleteMessage = undefined;
+            deleteMessages = [];
+            $("#delete-message-notify").hide();
+        }
+    }
+
+    //Редактирование сообщения
+    function editMessage(id) {
+        cancelSelectingMessage();
+        //Настройка формы для редактирования
+        $('#send-message-form').attr('id-message-edit', id);
+        $('#send-message-form').removeClass('pt-3').addClass('pt-1');
+        $("#input-message").val($(`#message-${id} .message-body`).text().trim());
+        $('#edit-message-notify').show();
+
+        //Выдедление редактируемого сообщения
+        $(`#message-${id}`).addClass('edit-message');
+    }
+    //Отмена выделения сообщения
+    function cancelSelectingMessage() {
+        $('.edit-message').removeClass('edit-message');
+    }
+    //Отмена редактирования сообщения
+    function cancelEditMessage() {
+        $('#send-message-form').removeAttr('id-message-edit');
+        $('#send-message-form').addClass('pt-3');
+        $("#input-message").val('');
+        $('#edit-message-notify').hide();
+
+        cancelSelectingMessage();
+    }
+
+
+    //Открытие диалога
+    function openDialog(id) {
+        window.location = `/Dialogs?id=${id}`;
+    }
+
+    //Получение списка диалогов
     function getDialogs() {
         send("/api/Dialogs", "GET", renderDialogs)
     }
 
+    //Отрисовка списка диалогов
     function renderDialogs(response) {
         if (response.status == 200) {
             var dialogs = response.responseJSON;
@@ -101,23 +202,23 @@
                 if (otherUsers.length > 1)
                     dialogIcon = otherUsers[0].firstName[0] + otherUsers[1].firstName[0];
 
-                var dialogName = dialog.title;
-                if (dialogName == undefined || dialogName == '') {
+                currentDialogName = dialog.title;
+                if (currentDialogName == undefined || currentDialogName == '') {
                     if (otherUsers.length == 1) {
-                        dialogName = `${otherUsers[0].firstName} ${otherUsers[0].lastName}`;
+                        currentDialogName = `${otherUsers[0].firstName} ${otherUsers[0].lastName}`;
                     } else {
-                        dialogName = otherUsers.map((user) => user.firstName).join(', ');
+                        currentDialogName = otherUsers.map((user) => user.firstName).join(', ');
                     }
                 }
 
 
                 $('#dialogs').append(`
-                    <div class="d-flex flex-nowrap m-0 p-2 dialog-simple pointer ${dialog.id == selectDialogId ? 'active-dialog': ''}" id="dialog-${dialog.id}">
+                    <div class="d-flex flex-nowrap m-0 p-2 dialog-simple pointer ${dialog.id == selectDialogId ? 'active-dialog' : ''}" id="dialog-${dialog.id}" onclick="openDialog(${dialog.id})">
                         <div class="rounded-circle dialog-icon">
                             <p>${dialogIcon.toUpperCase()}</p>
                         </div>
                         <div class="overflow-hidden pl-2 d-none d-sm-block">
-                            <p class="dialog-title m-0 p-0">${dialogName}</p>
+                            <p class="dialog-title m-0 p-0">${currentDialogName}</p>
                         </div>
                     </div>
                 `);
@@ -125,45 +226,38 @@
 
 
             if (selectDialogId != -1) {
-                usersDialog = dialogs.filter(p => p.id == selectDialogId)[0].users;
+                currentDialog = dialogs.filter(p => p.id == selectDialogId)[0];
+                $("#dialog-title").html(currentDialogName);
+
+                usersDialog = currentDialog.users;
                 getDialogMessages(selectDialogId);
             }
         }
     }
 
+    //Получение списка сообщений
     function getDialogMessages(id) {
         send(`/api/Messages/${id}`, "GET", renderDialogMessages);
     }
 
+    //Отрисовка списка сообщений
     function renderDialogMessages(response) {
         $("#messages").html('');
         if (response.status == 200) {
             if (response.responseJSON.length == 0)
                 $("#messages").append('<p class="center">Здесь будет выводиться история переписки.</p>');
             else {
+                var userId = ParseJwt($.cookie("Authorization")).Id;
                 response.responseJSON.sortBy('dateCreate').forEach(message => {
                     var user = usersDialog.filter(p => p.id == message.userId)[0];
-                    var userInitials = user.firstName[0] + user.lastName[0];
-                    var date = new Date(message.dateCreateUnix * 1000 - new Date().getTimezoneOffset() * 60);
-
-                    $("#messages").append(`
-                        <div class="row m-0 flex-nowrap message" id="message-${message.id}" time-stamp-unix="${message.dateCreateUnix}">
-                            <div class="rounded-circle user-icon">
-                                <p>${userInitials.toUpperCase()}</p>
-                            </div>
-                            <div class="d-flex flex-column">
-                                <div class="row m-0 p-0 align-content-end">
-                                    <p class="user-name pl-2 m-0">${user.firstName} ${user.lastName}</p>
-                                    <p class="message-time pl-2 m-0">${OnlyTime(date)}</p>
-                                </div>
-                                <p class="pl-2 message-body">
-                                    ${message.text}
-                                </p>
-
-                            </div>
-                        </div>
-                        `);
+                    message.dateCreateUnix = message.dateCreateUnix * 1000 - new Date().getTimezoneOffset() * 60;
+                    var messageHtml = renderMessage({
+                        message:  message,
+                        user:  user,
+                    });
+                    $("#messages").append(messageHtml);
                 });
+                UpdateScrollMessages();
             }
         } else {
             alert('Не удалось загрузить историю сообщений');
@@ -195,49 +289,87 @@
     // Отправка сообщения
     function AddMessage(form, event) {
         event.preventDefault();
-        var user = GetCurrentUserInfo();
-        var guid = generateUUID();
-        $("#messages").append(`
-                        <div class="row m-0 flex-nowrap message sending-message"  id="message--1" guid="${guid}">
-                            <div class="rounded-circle user-icon">
-                                <p>${(user.firstName[0] + user.lastName[0]).toUpperCase()}</p>
-                            </div>
-                            <div class="d-flex flex-column">
-                                @* Имя пользователя и дата сообщения *@
-                                <div class="row m-0 p-0 align-content-end">
-                                    <p class="user-name pl-2 m-0">${user.firstName} ${user.lastName}</p>
-                                    <p class="message-time pl-2 m-0">${OnlyTime(new Date())}</p>
-                                </div>
-                                @* Текст сообщения *@
-                                <p class="pl-2 message-body">
-                                    ${$("#input-message").val()}
-                                </p>
+        var editMessageId = $('#send-message-form').attr('id-message-edit');
+        // Добавление нового сообщения
+        if (editMessageId == undefined || editMessageId == '') {
+            var user = GetCurrentUserInfo();
+            var guid = generateUUID();
+            var messageHtml = renderMessage({
+                message: {
+                    text: $("#input-message").val(),
+                    dateCreateUnix: parseInt(new Date().getTime())
+                },
+                user: user,
+                guid: guid,
+                classes: 'sending-message'
+            });
 
-                            </div>
-                        </div>`);
-        UpdateScrollMessages();
+            $("#messages").append(messageHtml);
+            UpdateScrollMessages();
 
-        var message = $("#input-message").val();
-        $("#input-message").val('');
-        $.ajax({
-            url: `/api/Messages?dialogId=${selectDialogId}&message=${message}`,
-            method: "POST",
-            //contentType: "application/json; charset=UTF-8",
-            //data: JSON.stringify({
-            //    'dialogId': selectDialogId,
-            //    'message': message
-            //}),
-            complete: (response) => {
-                if (response.status == 200) {
-                    $(`#message--1[guid=${guid}]`).attr('id', `message-${response.responseText}`);
-                } else {
-                    // TODO: Оповестить пользвоателя о неудачной отправке сообщения
+            var message = $("#input-message").val();
+            $("#input-message").val('');
+            $.ajax({
+                url: `/api/Messages?dialogId=${selectDialogId}&message=${message}`,
+                method: "POST",
+                //contentType: "application/json; charset=UTF-8",
+                //data: JSON.stringify({
+                //    'dialogId': selectDialogId,
+                //    'message': message
+                //}),
+                complete: (response) => {
+                    if (response.status == 200) {
+                        $(`#message--1[guid=${guid}]`).attr('id', `message-${response.responseText}`);
+                    } else {
+                        // TODO: Оповестить пользвоателя о неудачной отправке сообщения
+                    }
+
                 }
+            })
+        }
+        // Редактирование сообщения
+        else {
+            let newText = $("#input-message").val();
+            let currentDialogId = currentDialog.id;
+            cancelEditMessage();
+            $(`#message-${editMessageId} .message-body`).html(newText);
 
-            }
-        })
+            send(`/api/Messages/${currentDialogId}/${editMessageId}?newText=${newText}`, 'PUT', (response) => console.log(response));
+        }
 
+    }
 
+    // Отрисовывет сообщение на странице
+    function renderMessage(options) {
+        var messageId = get(options,'message>id');
+        if (messageId == '') messageId = '-1';
+        var currentUserId = GetCurrentUserInfo().id;
+
+        // Кнопки редактирования сообщения
+        var editButtons =`<div class="d-flex buttons-message">
+                    <img src="/images/edit.png" class="pointer" onclick="editMessage(${get(options, 'message>id')})" />
+                    <img src="/images/broom.png" class="pointer" onclick="deleteMessage(${get(options, 'message>id')})"/>
+                </div>`;
+
+        return `
+            <div class="d-flex m-0 my-2 px-5 py-1 flex-nowrap message justify-content-between ${get(options, 'classes')}" id="message-${messageId}" time-stamp-unix="${get(options, 'message>dateCreateUnix')}" guid="${get(options, 'guid')}">
+                <div class="d-flex">
+                    <div class="rounded-circle user-icon">
+                        <p>${(get(options, 'user>firstName>0') + get(options, 'user>lastName>0')).toUpperCase()}</p>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <div class="row m-0 p-0 align-content-end">
+                            <p class="user-name pl-2 m-0">${get(options, 'user>firstName')} ${get(options, 'user>lastName')}</p>
+                            <p class="message-time pl-2 m-0">${OnlyTime(new Date(get(options, 'message>dateCreateUnix')))}</p>
+                        </div>
+                        <p class="pl-2 m-0 message-body">
+                            ${get(options, 'message>text')}
+                        </p>
+
+                    </div>
+                </div>
+                ${currentUserId == get(options, 'user>id') ? editButtons : ''}
+            </div>`;
     }
 
 

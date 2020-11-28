@@ -8,6 +8,7 @@ using MeetingWebsite.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingWebsite.Controllers
 {
@@ -123,5 +124,36 @@ namespace MeetingWebsite.Controllers
 
             return Ok();
         }
+
+        /// <summary>
+        /// Удаляет список сообщений
+        /// </summary>
+        /// <param name="messagesId">Идентификаторы сообщений</param>
+        /// <returns>200 - если успешно</returns>
+        [HttpDelete("")]
+        public async Task<IActionResult> DeleteRange(List<int> messagesId)
+        {
+            try
+            {
+                if (messagesId.Count == 0) return Ok();
+                var currentUserId = CurrentUserId();
+
+
+                var messages = await _messagesRepository.GetList()
+                    .Where(p => messagesId.Contains(p.Id) && p.UserId == currentUserId)
+                    .ToListAsync();
+
+                if (await _messagesRepository.RemoveRange(messages))
+                    return Ok();
+                else
+                    return StatusCode(500);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
     }
 }
