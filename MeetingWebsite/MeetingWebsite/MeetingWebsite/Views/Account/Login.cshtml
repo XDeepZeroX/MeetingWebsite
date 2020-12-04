@@ -26,8 +26,10 @@
             GetUserInfoFromServer();
             var redirectUrl = new URL(window.location.href).searchParams.get("redirectUrl")
             //Если есть куда, то перенаправить
-            if (redirectUrl != undefined || redirectUrl != "") {
+            if (redirectUrl != undefined && redirectUrl != "") {
                 window.location.replace(redirectUrl);
+            } else {
+                window.location = '/Dialogs';
             }
             //Иначе отправить на какую-то страницу
             //TODO: доделать

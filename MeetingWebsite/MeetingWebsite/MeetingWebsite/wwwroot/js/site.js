@@ -124,3 +124,9 @@ function get(dict, keys) {
     }
     return res;
 }
+
+//Log out
+function LogOut() {
+    $.removeCookie("Authorization");
+    window.location = '/Account/Login';
+}
