@@ -1,23 +1,15 @@
-﻿@model MeetingWebsite.ModelsView.UserModels.UserView
+﻿@model MeetingWebsite.Models.User
 @using MeetingWebsite.Models
 
 @{
-    ViewData["Title"] = "Аккаунт";
+    ViewData["Title"] = "Пользователь";
 }
 <div class="d-flex flex-column w-75 border ml-3">
     <div class="card-header">
-        <span>Настройки</span>
+        <span>@Model.FirstName @Model.LastName</span>
     </div>
     <form class="p-2 pt-5">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group d-flex ">
-            <label class="control-label col-4 text-right" style="line-height: 38px;">Имя</label>
-            <input asp-for="FirstName" class="form-control col-5" value="@Model.FirstName" />
-        </div>
-        <div class="form-group d-flex ">
-            <label class="control-label col-4 text-right" style="line-height: 38px;">Фамилия</label>
-            <input asp-for="LastName" class="form-control col-5" value="@Model.LastName" />
-        </div>
         <div class="form-group d-flex ">
             <label class="control-label col-4 text-right" style="line-height: 38px;">Возраст</label>
             <input asp-for="Age" type="number" class="form-control col-5" min="0" max="100" value="@Model.Age" />
@@ -49,12 +41,12 @@
         </div>
 
         <div class="form-group d-flex ">
-            <label class="control-label col-4 text-right" >Коротко о себе</label>
+            <label class="control-label col-4 text-right">Коротко о себе</label>
 
             <textarea name="BriefInformation" class="form-control col-5" value="@Model.BriefInformation"></textarea>
         </div>
         <div class="form-group mb-1 d-flex justify-content-center">
-            <input class="btn btn-sm btn-primary disabled" value="Сохранить изменения"/>
+            <input class="btn btn-sm btn-primary disabled" value="Сохранить изменения" />
         </div>
         <div class="text-center">
             <label class="text-danger" id="error"></label>

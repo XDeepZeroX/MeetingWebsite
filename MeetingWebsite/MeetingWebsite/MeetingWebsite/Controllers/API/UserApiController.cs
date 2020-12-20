@@ -20,12 +20,12 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace MeetingWebsite.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/User")]
     [ApiController]
     [Authorize]
-    public class UserController : _BaseApiController
+    public class UserApiController : _BaseApiController
     {
-        public UserController(UsersRepository userRepository) : base(userRepository)
+        public UserApiController(UsersRepository userRepository) : base(userRepository)
         {
         }
 

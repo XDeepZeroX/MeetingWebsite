@@ -94,7 +94,7 @@
             </summary>
             <returns>Возвращает максимум 25 пользователей</returns>
         </member>
-        <member name="M:MeetingWebsite.Controllers.UserController.Login(System.String,System.String)">
+        <member name="M:MeetingWebsite.Controllers.UserApiController.Login(System.String,System.String)">
             <summary>
             Получение токена доступа (Авторизация)
             </summary>
@@ -102,21 +102,21 @@
             <param name="password">Пароль учетной записи</param>
             <returns>Токен доступа</returns>
         </member>
-        <member name="M:MeetingWebsite.Controllers.UserController.Registration(MeetingWebsite.ModelsView.Auth.RegistrationModel)">
+        <member name="M:MeetingWebsite.Controllers.UserApiController.Registration(MeetingWebsite.ModelsView.Auth.RegistrationModel)">
             <summary>
             Регистрация новой учетной записи
             </summary>
             <param name="model">Учетный данные</param>
             <returns></returns>
         </member>
-        <member name="M:MeetingWebsite.Controllers.UserController.UpdateUser(MeetingWebsite.ModelsView.UserModels.UpdateUserView)">
+        <member name="M:MeetingWebsite.Controllers.UserApiController.UpdateUser(MeetingWebsite.ModelsView.UserModels.UpdateUserView)">
             <summary>
             Обновление информации об учетной записи
             </summary>
             <param name="model">Обновленная информация о пользователе</param>
             <returns></returns>
         </member>
-        <member name="M:MeetingWebsite.Controllers.UserController.Authorize(System.String,System.String)">
+        <member name="M:MeetingWebsite.Controllers.UserApiController.Authorize(System.String,System.String)">
             <summary>
             Выдача токена по Email и паролю
             </summary>
@@ -124,7 +124,7 @@
             <param name="password">Пароль</param>
             <returns>Токен</returns>
         </member>
-        <member name="M:MeetingWebsite.Controllers.UserController.GetIdentity(System.String,System.String)">
+        <member name="M:MeetingWebsite.Controllers.UserApiController.GetIdentity(System.String,System.String)">
             <summary>
             Аутендификация пользователя
             </summary>
