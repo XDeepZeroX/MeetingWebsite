@@ -37,9 +37,22 @@ namespace MeetingWebsite.Controllers
         [HttpGet("{dialogId}")]
         public async Task<IActionResult> GetList(int dialogId, int lastKey = -1, int count = 1000)
         {
+            var currentUserId = CurrentUserId();
+
             if (count < 0) count = 1000;
 
-            var query = _messagesRepository.GetList();
+            var isAccess = (await _dialogsRepository.GetList()
+                .Include(p => p.DialogsUsers)
+                .ThenInclude(p => p.User)
+                .FirstOrDefaultAsync(p => p.Id == dialogId))
+                ?.DialogsUsers?.Any(p => p.UserId == currentUserId) ?? false;
+
+            if (!isAccess)
+                return StatusCode(404);
+
+            var query = _messagesRepository.GetList()
+                .Where(p => p.DialogId == dialogId);
+
             if (lastKey > 0)
                 query = query.Where(p => p.Id < lastKey);
 
@@ -89,6 +102,9 @@ namespace MeetingWebsite.Controllers
         public async Task<IActionResult> Update(int dialogId, int messageId, string newText)
         {
             var message = await _messagesRepository.Find(messageId);
+            if (message == null)
+                return StatusCode(404, "Сообщение не найдено");
+
             var currentUserId = CurrentUserId();
             if (message.UserId != currentUserId)
                 return StatusCode(401, "Изменить сообщение может только его создатель");

@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeetingWebsite", "MeetingWebsite\MeetingWebsite.csproj", "{4E624ABF-DDFA-438A-BABD-1AE5B6C458EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetingWebsite.Tests", "MeetingWebsite.Tests\MeetingWebsite.Tests.csproj", "{ACF2D0D4-5263-425E-A5BA-7105C9CA25F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4E624ABF-DDFA-438A-BABD-1AE5B6C458EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E624ABF-DDFA-438A-BABD-1AE5B6C458EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E624ABF-DDFA-438A-BABD-1AE5B6C458EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACF2D0D4-5263-425E-A5BA-7105C9CA25F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACF2D0D4-5263-425E-A5BA-7105C9CA25F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACF2D0D4-5263-425E-A5BA-7105C9CA25F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACF2D0D4-5263-425E-A5BA-7105C9CA25F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

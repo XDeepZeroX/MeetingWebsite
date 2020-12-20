@@ -45,7 +45,9 @@ namespace MeetingWebsite.Controllers
 
         protected int CurrentUserId()
         {
-            return int.Parse(User.Claims.FirstOrDefault(p => p.Type == "Id").Value);
+            if (User != null)
+                return int.Parse(User.Claims.FirstOrDefault(p => p.Type == "Id").Value);
+            return -1;
         }
     }
 }

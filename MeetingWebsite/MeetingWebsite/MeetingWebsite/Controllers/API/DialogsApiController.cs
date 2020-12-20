@@ -39,6 +39,7 @@ namespace MeetingWebsite.Controllers
             //    .ThenInclude(p => p.Dialog)
             //    .FirstOrDefaultAsync(p => p.Email == emailUser)
             //    )?.DialogsUsers?.Select(p => p.Dialog).ToList();
+            var test = _dialogsRepository.GetList();
 
             var dialogs = await _dialogsRepository.GetList()
                 .Include(p => p.DialogsUsers)

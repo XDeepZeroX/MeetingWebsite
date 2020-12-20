@@ -14,7 +14,7 @@ namespace MeetingWebsite
         public DbSet<Dialog> Dialogs { get; set; }
         public DbSet<Message> Messages { get; set; }
 
-
+        public DBContext() { }
         public DBContext(DbContextOptions<DBContext> options)
             : base(options)
         {

@@ -135,3 +135,5 @@ dmypy.json
 **/node_modules
 /MeetingWebsite/MeetingWebsite/MeetingWebsite/Meeting.db-shm
 /MeetingWebsite/MeetingWebsite/MeetingWebsite/Meeting.db-wal
+/MeetingWebsite/MeetingWebsite/MeetingWebsite.Tests/bin/Debug/netcoreapp3.1
+/MeetingWebsite/MeetingWebsite/MeetingWebsite.Tests/obj
